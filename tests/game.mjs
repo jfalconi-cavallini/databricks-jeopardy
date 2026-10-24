@@ -10,9 +10,10 @@ const shots = '/tmp/jeopardy-shots';
 mkdirSync(shots, { recursive: true });
 
 const DOMAINS = ['Platform', 'Ingestion', 'Transformation', 'Lakeflow Jobs', 'CI/CD', 'Troubleshooting', 'Governance'];
-const P1 = ['1', '2', '3', '4'];
-const P2 = ['7', '8', '9', '0'];
-const KEY_LABELS = ['P1 1', 'P2 7', 'P1 2', 'P2 8', 'P1 3', 'P2 9', 'P1 4', 'P2 0'];
+const P1 = ['q', 'w', 'a', 's'];
+const P2 = ['i', 'o', 'k', 'l'];
+const KEY_LABELS = ['P1 Q', 'P2 I', 'P1 W', 'P2 O', 'P1 A', 'P2 K', 'P1 S', 'P2 L'];
+const QUADS = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
 
 function serve() {
   return new Promise(resolve => {
@@ -112,6 +113,34 @@ async function main() {
     return texts.map(norm);
   }
 
+  async function assertGrid() {
+    const layout = await page.evaluate(() => {
+      const grid = getComputedStyle(document.getElementById('mopts'));
+      const items = [...document.querySelectorAll('#mopts .opt')].map(el => {
+        const r = el.getBoundingClientRect();
+        return {
+          i: el.dataset.i,
+          pos: el.dataset.pos,
+          place: el.querySelector('.pos').textContent,
+          letter: el.querySelector('.ltr').textContent,
+          x: r.x,
+          y: r.y
+        };
+      });
+      return { display: grid.display, cols: grid.gridTemplateColumns, items };
+    });
+    assert.equal(layout.display, 'grid');
+    assert.equal(layout.cols.trim().split(/\s+/).length, 2, layout.cols);
+    const by = Object.fromEntries(layout.items.map(item => [item.i, item]));
+    assert.deepEqual(layout.items.map(item => item.pos), QUADS);
+    assert.deepEqual(layout.items.map(item => item.letter), ['A', 'B', 'C', 'D']);
+    assert.deepEqual(layout.items.map(item => item.place), ['Top left', 'Top right', 'Bottom left', 'Bottom right']);
+    assert.ok(by['0'].x < by['1'].x && by['2'].x < by['3'].x, 'columns swapped');
+    assert.ok(by['0'].y < by['2'].y && by['1'].y < by['3'].y, 'rows swapped');
+    assert.ok(Math.abs(by['0'].y - by['1'].y) < 12, 'top row not aligned');
+    assert.ok(Math.abs(by['2'].y - by['3'].y) < 12, 'bottom row not aligned');
+  }
+
   await test('board shows 7 exam categories, 35 values, and two daily doubles off the 200 row', async () => {
     await reset();
     const cats = await page.locator('.cat').allTextContents();
@@ -123,15 +152,17 @@ async function main() {
     });
     assert.equal(await page.locator('#s0').textContent(), '$0');
     assert.equal(await page.locator('#s1').textContent(), '$0');
-    assert.equal(await page.locator('#p0 .keys').textContent(), '1 2 3 4');
-    assert.equal(await page.locator('#p1 .keys').textContent(), '7 8 9 0');
+    assert.equal(await page.locator('#p0 .keys').textContent(), 'Q W / A S');
+    assert.equal(await page.locator('#p1 .keys').textContent(), 'I O / K L');
     assert.equal(await page.locator('.buzz').count(), 0);
     const help = await page.locator('#help').textContent();
-    assert.match(help, /1 2 3 4/);
-    assert.match(help, /7 8 9 0/);
+    assert.match(help, /Q W \/ A S/);
+    assert.match(help, /I O \/ K L/);
     assert.match(help, /Esc/);
     assert.match(help, /F fullscreen/);
     assert.match(help, /M mute/);
+    assert.doesNotMatch(help, /1 2 3 4/);
+    assert.doesNotMatch(help, /7 8 9 0/);
     assert.doesNotMatch(help, /buzz/i);
     const s = await game();
     assert.equal(new Set(s.dd).size, 2);
@@ -151,9 +182,10 @@ async function main() {
     const pack = await page.evaluate(() => window.__PACK);
     assert.deepEqual(pack.domains, DOMAINS);
     assert.deepEqual(pack.names, DOMAINS);
-    assert.deepEqual(pack.keys.p1, P1);
-    assert.deepEqual(pack.keys.p2, P2);
+    assert.deepEqual(pack.keys.p1, ['Q', 'W', 'A', 'S']);
+    assert.deepEqual(pack.keys.p2, ['I', 'O', 'K', 'L']);
     assert.deepEqual(pack.keys.letters, ['A', 'B', 'C', 'D']);
+    assert.deepEqual(pack.keys.positions, QUADS);
     assert.equal(pack.clues.length, 7);
     const byId = new Map();
     pack.clues.forEach((pools, c) => {
@@ -201,7 +233,7 @@ async function main() {
     assert.equal(new Set(idsOf(s)).size, 36);
   });
 
-  await test('first player key locks the answer; A and L do not buzz', async () => {
+  await test('first player key locks the answer; number keys do not', async () => {
     await reset();
     const k = '0-0';
     const s = await game();
@@ -214,8 +246,10 @@ async function main() {
     assert.equal(await page.locator('#mdomain').textContent(), s.deck[k].domain);
     assert.equal(await page.locator('#mdomain').isVisible(), true);
     assert.deepEqual(await page.locator('.opt .txt').allTextContents(), s.deck[k].options);
-    await page.keyboard.press('a');
-    await page.keyboard.press('l');
+    await page.keyboard.press('1');
+    await page.keyboard.press('4');
+    await page.keyboard.press('7');
+    await page.keyboard.press('0');
     assert.equal((await game()).scores[0], 0);
     assert.equal((await game()).scores[1], 0);
     assert.ok(!(await page.locator(`.opt[data-i="${correct}"]`).getAttribute('class')).includes('right'));
@@ -234,7 +268,7 @@ async function main() {
     assert.equal(await page.locator('#modal.show').count(), 0);
   });
 
-  await test('player 2 can win the race with 7 8 9 0', async () => {
+  await test('player 2 can win the race with i o k l', async () => {
     await reset();
     const k = '1-1';
     const correct = (await game()).deck[k].correct;
@@ -303,7 +337,8 @@ async function main() {
     assert.equal(await page.locator('#mdomain').isVisible(), true);
     await shot('05-daily-double');
     await page.keyboard.press('1');
-    await page.keyboard.press('7');
+    await page.keyboard.press('q');
+    await page.keyboard.press('i');
     assert.match(await page.locator('#mclue').textContent(), /DAILY DOUBLE/);
     assert.equal((await game()).scores[0], 0);
     await page.click('#who0');
@@ -433,7 +468,7 @@ async function main() {
     });
     assert.ok(overflow <= 1, 'expectations modal overflow ' + overflow);
     await shot('07-expectations');
-    await page.keyboard.press('1');
+    await page.keyboard.press('q');
     assert.match(await page.locator('#mstatus').textContent(), /Transformation/);
     assert.match(await page.locator('#mstatus').textContent(), /correct/i);
     assert.equal(await page.locator('#mdomain').textContent(), 'Transformation');
@@ -462,6 +497,7 @@ async function main() {
         assert.deepEqual(opts, s.deck[k].options);
         assert.deepEqual(await page.locator('.opt .ltr').allTextContents(), ['A', 'B', 'C', 'D']);
         assert.deepEqual(await keyLabels(), KEY_LABELS, k);
+        await assertGrid();
         assert.equal(s.deck[k].options[s.deck[k].correct] === s.deck[k].options[s.deck[k].correct], true);
         assert.ok(s.deck[k].correct >= 0 && s.deck[k].correct <= 3, k);
         const overflow = await page.evaluate(() => {
@@ -522,6 +558,50 @@ async function main() {
     assert.equal(disjoint(reusedIds, allIds).length, 36);
     assert.equal(reused.seen.length, 36);
     reusedIds.forEach(id => assert.ok(reused.seen.includes(id)));
+  });
+
+  await test('quadrants match the keys, the A key is answer C, and modifiers do not answer', async () => {
+    await reset();
+    const k = '4-0';
+    await openTile(k);
+    await assertGrid();
+    await shot('08-quadrant');
+    assert.match(await page.locator('#mlegend').textContent(), /P1 A is bottom-left \(answer C\)/);
+    await page.keyboard.press('Control+q');
+    await page.keyboard.press('Meta+l');
+    await page.keyboard.press('Alt+s');
+    assert.equal((await game()).scores[0], 0);
+    assert.equal((await game()).scores[1], 0);
+    assert.equal(await page.locator('.opt.wrong, .opt.right').count(), 0);
+    const before = (await game()).scores[0];
+    await page.keyboard.press('a');
+    const correct = (await game()).deck[k].correct;
+    const marked = await page.locator('.opt[data-i="2"]').getAttribute('class');
+    if (correct === 2) {
+      assert.match(marked, /right/);
+      assert.equal((await game()).scores[0], before + 200);
+    } else {
+      assert.match(marked, /wrong/);
+      assert.equal((await game()).scores[0], before - 200);
+      assert.ok(!/right|wrong/.test(await page.locator('.opt[data-i="0"]').getAttribute('class') || ''));
+    }
+    await page.keyboard.press('Escape');
+    await page.waitForFunction(() => !document.getElementById('modal').classList.contains('show'));
+
+    const k2 = '5-0';
+    await openTile(k2);
+    const before2 = (await game()).scores[0];
+    await page.keyboard.press('Q');
+    const correct2 = (await game()).deck[k2].correct;
+    const marked2 = await page.locator('.opt[data-i="0"]').getAttribute('class');
+    if (correct2 === 0) {
+      assert.match(marked2, /right/);
+      assert.equal((await game()).scores[0], before2 + 200);
+    } else {
+      assert.match(marked2, /wrong/);
+      assert.equal((await game()).scores[0], before2 - 200);
+      assert.ok(!/right|wrong/.test(await page.locator('.opt[data-i="2"]').getAttribute('class') || ''));
+    }
   });
 
   await test('mute and fullscreen keys do not break the board', async () => {

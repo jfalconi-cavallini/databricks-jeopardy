@@ -6,18 +6,24 @@ The seven columns are the exam sections: Platform, Ingestion, Transformation, La
 
 ## How to play
 
-1. Choose a clue on the board. The exam domain is the gold pill above the clue. The four answers are already on screen, with both players' keys beside them.
-2. There is no separate buzzer. The first player to press one of their keys locks in as the answerer with that choice.
-   Player 1 uses the number row: **1 2 3 4** for A B C D.
-   Player 2 uses the number row: **7 8 9 0** for A B C D.
-   The same keys are buttons on each answer if you are using a mouse.
+1. Choose a clue on the board. The exam domain is the gold pill above the clue. The four answers are a 2×2 grid that matches the keyboard.
+2. There is no separate buzzer. The first player to press one of their keys locks in as the answerer with that choice. Letter keys are case-insensitive. Ctrl, Cmd, and Alt are ignored, so those shortcuts are left alone.
+
+   | Quadrant | Answer | Player 1 | Player 2 |
+   | --- | --- | --- | --- |
+   | Top left | A | Q | I |
+   | Top right | B | W | O |
+   | Bottom left | C | A | K |
+   | Bottom right | D | S | L |
+
+   Player 1's **A** key is bottom-left, answer **C**, not answer A. Each quadrant is labeled with its corner and both keys. The same keys are buttons if you are using a mouse.
 3. A right pick adds the clue value and lights the correct answer in green. The domain stays on the card and in the result line. The clue then closes.
 4. A wrong pick subtracts the value and marks that answer. Only the other player's keys can steal from what is left.
 5. If both players miss, or the miss is a Daily Double, the correct answer lights up. **Esc** closes the clue.
 
 **Daily Double** (two per game, never on the $200 row): choose who found it, wager up to that player's score or $1,000, whichever is higher, then answer. Only that player's keys count. There is no steal.
 
-**Final Jeopardy** is multiple choice too. The domain pill is up while you wager. Both players type a hidden wager (up to their score). Player 1 then locks a secret pick with **1 2 3 4** while player 2 looks away. Player 2 locks a secret pick with **7 8 9 0**. The reveal lights the correct choice, keeps the domain pill, and applies both wagers.
+**Final Jeopardy** is multiple choice too. The domain pill is up while you wager. Both players type a hidden wager (up to their score). Player 1 then locks a secret pick with **Q W A S** while player 2 looks away. Player 2 locks a secret pick with **I O K L**. The reveal lights the correct choice, keeps the domain pill, and applies both wagers.
 
 **New Game** deals a new board and skips clue ids this browser has already seen. When a cell's four clues have all been used, that cell's pool starts over. Refreshing the page keeps the current game, including which clues were dealt and the answer order.
 
@@ -27,8 +33,14 @@ Click a name to edit it. **−** and **+** change a score by $200.
 
 | Key | Action |
 | --- | --- |
-| 1 2 3 4 | Player 1 answers A B C D. The first of these keys locks player 1 in with that choice. |
-| 7 8 9 0 | Player 2 answers A B C D. The first of these keys locks player 2 in with that choice. |
+| Q | Player 1, answer A, top left |
+| W | Player 1, answer B, top right |
+| A | Player 1, answer C, bottom left. This is the letter A, not answer A. |
+| S | Player 1, answer D, bottom right |
+| I | Player 2, answer A, top left |
+| O | Player 2, answer B, top right |
+| K | Player 2, answer C, bottom left |
+| L | Player 2, answer D, bottom right |
 | Esc | Close the clue |
 | F | Fullscreen |
 | M | Mute or unmute the answer sounds |
@@ -39,7 +51,7 @@ On a steal, only the player who has not answered yet can score, and only with th
 
 1. Open the site in the browser on the computer connected to the TV.
 2. Press **F** so the board fills the screen.
-3. Keep one keyboard where player 1 can reach **1-4** and player 2 can reach **7, 8, 9, and 0**. Each answer also has a P1 key and a P2 key you can click.
+3. Keep one keyboard where player 1 can reach **Q W A S** with the left hand and player 2 can reach **I O K L** with the right. Each quadrant also has a P1 key and a P2 key you can click.
 4. For Final Jeopardy, one player looks away while the other locks a pick, then they switch.
 5. Press **M** if the room should stay quiet.
 
