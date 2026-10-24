@@ -8,52 +8,58 @@
 *{box-sizing:border-box}
 body{margin:0;background:#000;color:#fff;font-family:Arial Black,Arial,sans-serif;height:100vh;display:flex;flex-direction:column;overflow:hidden}
 header{display:flex;justify-content:space-between;align-items:center;gap:1vw;padding:.6vh 1vw;background:#0b1a5c;flex-wrap:wrap}
-h1{margin:0;font-size:3.4vh;color:#ffcc00;letter-spacing:.08em;white-space:nowrap}
-#help{font-size:2.2vh;color:#d5ddff;flex:1;text-align:center}
+h1{margin:0;font-size:3vh;color:#ffcc00;letter-spacing:.06em;white-space:nowrap}
+#help{font-size:1.9vh;color:#d5ddff;flex:1;text-align:center;line-height:1.25}
 header button,.btn{font:inherit;font-size:2vh;padding:.7vh 1vw;background:#ff3621;color:#fff;border:0;border-radius:6px;cursor:pointer}
 header button{margin-left:.4vw}
-#board{flex:1;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:auto repeat(5,1fr);gap:.5vh;padding:.5vh;background:#000;min-height:0}
-.cat{background:#060ce9;display:flex;align-items:center;justify-content:center;text-align:center;font-size:2.5vh;padding:1vh .4vw;min-height:8vh;text-transform:uppercase;line-height:1.15}
-.tile{background:#060ce9;color:#ffcc00;font-size:6vh;display:flex;align-items:center;justify-content:center;cursor:pointer;text-shadow:3px 3px #000;user-select:none}
+#board{flex:1;display:grid;grid-template-columns:repeat(7,1fr);grid-template-rows:auto repeat(5,1fr);gap:.45vh;padding:.45vh;background:#000;min-height:0}
+.cat{background:#060ce9;display:flex;align-items:center;justify-content:center;text-align:center;font-size:1.85vh;padding:.7vh .25vw;min-height:7.2vh;text-transform:uppercase;line-height:1.1}
+.tile{background:#060ce9;color:#ffcc00;font-size:4.6vh;display:flex;align-items:center;justify-content:center;cursor:pointer;text-shadow:3px 3px #000;user-select:none}
 .tile:not(.used):hover{filter:brightness(1.2)}
 .tile.used{background:#02064a;color:transparent;cursor:default}
-#scores{display:flex;gap:1vw;padding:.6vh 1vw;background:#0b1a5c}
-.player{flex:1;display:flex;align-items:center;justify-content:space-between;gap:.5vw;background:#060ce9;padding:1vh 1vw;border-radius:8px;border:4px solid transparent;min-width:0}
+#scores{display:flex;gap:1vw;padding:.55vh 1vw;background:#0b1a5c}
+.player{flex:1;display:flex;align-items:center;justify-content:space-between;gap:.5vw;background:#060ce9;padding:.8vh 1vw;border-radius:8px;border:4px solid transparent;min-width:0}
 .player.lock{border-color:#ffcc00;box-shadow:0 0 20px #ffcc00}
-.player input{font:inherit;font-size:3.2vh;background:transparent;color:#fff;border:0;width:30%;min-width:0}
-.score{font-size:5.6vh;color:#fff;white-space:nowrap}
+.player input{font:inherit;font-size:2.8vh;background:transparent;color:#fff;border:0;width:28%;min-width:0}
+.player .keys{font-size:2.5vh;color:#ffcc00;white-space:nowrap;letter-spacing:.04em}
+.score{font-size:4.8vh;color:#fff;white-space:nowrap}
 .score.neg{color:#ff6b6b}
 .adj{white-space:nowrap}
-.adj button{font:inherit;font-size:2.6vh;min-width:5vh;height:5vh;margin:0 .15vw;cursor:pointer}
-.buzz{white-space:nowrap}
-#modal{position:fixed;inset:0;background:#060ce9;display:none;flex-direction:column;align-items:center;justify-content:center;padding:2.5vh 3vw;text-align:center;z-index:5;overflow:auto}
+.adj button{font:inherit;font-size:2.4vh;min-width:4.6vh;height:4.6vh;margin:0 .12vw;cursor:pointer}
+#modal{position:fixed;inset:0;background:#060ce9;display:none;flex-direction:column;align-items:center;justify-content:center;padding:1.4vh 2.2vw;text-align:center;z-index:5;overflow:auto}
 #modal.show{display:flex}
-#mlive{width:min(96vw,1600px);display:flex;justify-content:space-between;gap:2vw;font-size:3vh;color:#ffcc00;margin-bottom:1vh}
+#mlive{width:min(96vw,1600px);display:flex;justify-content:space-between;gap:2vw;font-size:2.6vh;color:#ffcc00;margin-bottom:.6vh}
 #mlive .hot{text-shadow:0 0 12px #ffcc00}
-#mcat{font-size:3.2vh;color:#ffcc00;letter-spacing:.04em}
-#mclue{font-size:4.2vh;margin:1.4vh 0 1.8vh;text-transform:uppercase;line-height:1.2;text-shadow:3px 3px #000;max-width:94vw}
-#mopts{width:min(94vw,1500px);display:flex;flex-direction:column;gap:1.1vh}
-.opt{font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:3.3vh;text-align:left;padding:1.15vh 1.3vw;border-radius:12px;border:4px solid #fff;background:#0b1a5c;color:#fff;cursor:pointer;display:flex;align-items:center;gap:1vw;line-height:1.2;width:100%}
-.opt:not(:disabled):hover{filter:brightness(1.12)}
-.opt .key{flex:0 0 auto;background:#ffcc00;color:#000;font-family:Arial Black,Arial,sans-serif;font-size:2.8vh;width:5.6vh;height:5.6vh;border-radius:8px;display:flex;align-items:center;justify-content:center}
-.opt .ltr{flex:0 0 auto;color:#ffcc00;font-family:Arial Black,Arial,sans-serif;font-size:3.2vh;width:4.2vh;text-align:center}
+#mdomain{font-family:Arial,Helvetica,sans-serif;font-weight:800;font-size:2.8vh;letter-spacing:.08em;text-transform:uppercase;background:#ffcc00;color:#06115f;border-radius:999px;padding:.45vh 1.5vw;margin:0 0 .8vh;text-shadow:none;line-height:1.2}
+#mdomain[hidden]{display:none !important}
+#mdomain:not([hidden]){display:inline-block}
+#mcat{font-size:2.6vh;color:#ffcc00;letter-spacing:.04em}
+#mclue{font-family:Arial Black,Arial,sans-serif;font-size:3.15vh;margin:.7vh 0 1vh;line-height:1.18;max-width:94vw;width:min(94vw,1500px);text-transform:none}
+#mclue .qtext{text-transform:uppercase;text-shadow:2px 2px #000}
+#mclue .code{text-transform:none;font-family:ui-monospace,"Cascadia Code",Consolas,"Courier New",monospace;font-weight:650;font-size:2.05vh;text-align:left;background:#04105a;color:#fff;border:3px solid #ffcc00;border-radius:10px;padding:.8vh 1.1vw;margin:.8vh auto 0;white-space:pre;line-height:1.32;text-shadow:none;overflow:auto;max-width:100%}
+#mlegend{font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:2.15vh;color:#ffcc00;min-height:2.3vh;margin:0 0 .45vh;letter-spacing:.01em}
+#mopts{width:min(94vw,1500px);display:flex;flex-direction:column;gap:.7vh}
+.opt{font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:2.7vh;text-align:left;padding:.7vh 1vw;border-radius:12px;border:4px solid #fff;background:#0b1a5c;color:#fff;display:flex;align-items:center;gap:.7vw;line-height:1.2;width:100%}
+.opt .key{flex:0 0 auto;background:#ffcc00;color:#000;font-family:Arial Black,Arial,sans-serif;font-size:2.15vh;min-width:8.2vh;height:4.8vh;border:0;border-radius:8px;display:flex;align-items:center;justify-content:center;gap:.35vh;cursor:pointer;padding:0 .5vh}
+.opt .key small{font-size:1.35vh;letter-spacing:.04em}
+.opt .key:disabled{opacity:.35;cursor:default}
+.opt .ltr{flex:0 0 auto;color:#ffcc00;font-family:Arial Black,Arial,sans-serif;font-size:2.8vh;width:3.4vh;text-align:center}
 .opt .txt{flex:1}
-.opt .badge{flex:0 0 auto;font-family:Arial Black,Arial,sans-serif;font-size:2.2vh;letter-spacing:.06em}
+.opt .badge{flex:0 0 auto;font-family:Arial Black,Arial,sans-serif;font-size:2vh;letter-spacing:.06em}
 .opt.right{background:#0c6e32;border-color:#d6ff4a;box-shadow:0 0 24px rgba(214,255,74,.45)}
 .opt.wrong{background:#7a1428;border-color:#ff8d8d}
-.opt:disabled{cursor:default;opacity:1;color:#fff}
-#mstatus{font-size:3.2vh;margin:1.5vh 0 1vh;line-height:1.35;max-width:94vw;min-height:4vh;white-space:pre-line}
+#mstatus{font-size:2.6vh;margin:1vh 0 .7vh;line-height:1.3;max-width:94vw;min-height:3.2vh;white-space:pre-line}
 #mbtns{display:flex;flex-wrap:wrap;justify-content:center;gap:.6vw}
-#mbtns .btn{font-size:2.8vh;padding:1.1vh 1.6vw}
-input.w,input.secret{font-family:Arial,Helvetica,sans-serif;font-size:4vh;width:16vw;min-width:140px;text-align:center;border:0;border-radius:8px;padding:.4vh .6vw}
+#mbtns .btn{font-size:2.5vh;padding:.9vh 1.4vw}
+input.w,input.secret{font-family:Arial,Helvetica,sans-serif;font-size:3.4vh;width:16vw;min-width:140px;text-align:center;border:0;border-radius:8px;padding:.4vh .6vw}
 input.secret{-webkit-text-security:disc}
-.wager-row{font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:3.4vh;margin:.8vh 0}
+.wager-row{font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:3vh;margin:.6vh 0}
 </style>
 </head>
 <body>
 <header>
   <h1>DATABRICKS JEOPARDY!</h1>
-  <div id="help">A / L buzz · 1-4 pick A-D · Esc close · F fullscreen · M mute</div>
+  <div id="help">P1: 1 2 3 4 = A B C D · P2: 7 8 9 0 = A B C D · Esc close · F fullscreen · M mute</div>
   <div>
     <button id="finalBtn" type="button">Final Jeopardy</button>
     <button id="muteBtn" type="button">Mute</button>
@@ -65,8 +71,10 @@ input.secret{-webkit-text-security:disc}
 <div id="scores"></div>
 <div id="modal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="mcat">
   <div id="mlive"></div>
+  <div id="mdomain" class="pill" hidden></div>
   <div id="mcat"></div>
   <div id="mclue"></div>
+  <div id="mlegend"></div>
   <div id="mopts"></div>
   <div id="mstatus" aria-live="polite"></div>
   <div id="mbtns"></div>
@@ -74,56 +82,279 @@ input.secret{-webkit-text-security:disc}
 <script>
 const VALS = [200, 400, 600, 800, 1000];
 const KEY = 'dbjeopardy';
+const DOMAINS = ['Platform', 'Ingestion', 'Transformation', 'Lakeflow Jobs', 'CI/CD', 'Troubleshooting', 'Governance'];
+const P1_KEYS = ['1', '2', '3', '4'];
+const P2_KEYS = ['7', '8', '9', '0'];
+const P1_CODE = { Digit1: 0, Digit2: 1, Digit3: 2, Digit4: 3 };
+const P2_CODE = { Digit7: 0, Digit8: 1, Digit9: 2, Digit0: 3 };
+
+function Q(id, domain, q, a, w1, w2, w3, code) {
+  return { id: id, domain: domain, q: q, a: a, wrong: [w1, w2, w3], code: code || '' };
+}
+
+const EXPECT_SQL = 'CREATE OR REFRESH STREAMING TABLE orders_clean (\n  CONSTRAINT valid_id EXPECT (id IS NOT NULL) ON VIOLATION DROP ROW\n) AS SELECT * FROM STREAM(orders_raw);';
+
 const CATS = [
-  { name: 'Spark', clues: [
-    ['This Spark abstraction is a distributed collection of data organized into named columns, like a table', 'DataFrame', 'RDD', 'Accumulator', 'Broadcast variable'],
-    ['Transformations are lazy; these operations, such as count() or collect(), trigger actual execution', 'Actions', 'Transformations', 'Stages', 'Executors'],
-    ['Operations like groupBy or join that require a shuffle of data across partitions are this type of transformation', 'Wide transformation', 'Narrow transformation', 'Action', 'Whole-stage codegen'],
-    ['This DataFrame method reduces the number of partitions while avoiding a full shuffle', 'coalesce()', 'repartition()', 'repartitionByRange()', 'cache()'],
-    ['This Spark SQL optimizer turns DataFrame and SQL queries into optimized execution plans', 'Catalyst', 'Tungsten', 'Photon', 'DAG scheduler']
+  { name: 'Platform', domain: 'Platform', pools: [
+    [
+      Q('plat-200-1', 'Platform', 'Several analysts run ad hoc SQL through the day and need fast startup plus capacity that follows demand. Which compute fits?', 'A serverless SQL warehouse', 'A single-node cluster', 'An all-purpose cluster pinned to a large fixed size', 'A job cluster that shuts down when one notebook ends'),
+      Q('plat-200-2', 'Platform', 'Which layer gives Databricks tables ACID transactions?', 'Delta Lake', 'A SQL warehouse by itself', 'A Git folder', 'A job retry policy'),
+      Q('plat-200-3', 'Platform', 'A write whose columns or data types do not match the table is rejected. Which Delta behavior is that?', 'Schema enforcement', 'Schema evolution', 'Liquid clustering', 'Predictive optimization'),
+      Q('plat-200-4', 'Platform', 'Images and other non-tabular files should be governed in Unity Catalog as which object?', 'A volume', 'A SQL warehouse', 'A job task', 'A dashboard')
+    ],
+    [
+      Q('plat-400-1', 'Platform', 'A production run should get its own compute and release it when the run ends. Which compute is that?', 'Jobs compute', 'An all-purpose cluster left on for analysts', 'A Git branch', 'A personal laptop'),
+      Q('plat-400-2', 'Platform', 'SELECT with VERSION AS OF or TIMESTAMP AS OF reads an older snapshot using which Delta feature?', 'Time travel', 'VACUUM', 'A column mask', 'A file arrival trigger'),
+      Q('plat-400-3', 'Platform', 'Serverless jobs compute and serverless SQL warehouses are different from classic compute because:', 'Databricks manages the instances, so you do not pick the VMs yourself', 'They run only as a local Spark process on a laptop', 'They cannot execute a notebook or a SQL query', 'They store table metadata in a Git branch'),
+      Q('plat-400-4', 'Platform', 'All-purpose compute is the usual choice when you need:', 'A cluster that stays up between interactive notebook commands', 'A two-minute nightly job that should exit when it finishes', 'A Unity Catalog privilege', 'A compaction schedule')
+    ],
+    [
+      Q('plat-600-1', 'Platform', 'Turning on schema evolution for a write, for example mergeSchema, does what?', 'Allows a compatible new column to be added as the data is written', 'Deletes history older than seven days', 'Masks a column for one group', 'Turns the table into a view'),
+      Q('plat-600-2', 'Platform', 'Which pair matches the platform pieces the associate exam treats as core?', 'Delta Lake for transactional tables and Unity Catalog for governance', 'DBFS as the catalog and a laptop disk as the transaction log', 'A SQL warehouse as the grant system and VACUUM as access control', 'Git folders as the table format'),
+      Q('plat-600-3', 'Platform', 'Classic all-purpose and classic jobs compute run where?', 'In the customer cloud account', 'Only inside the Unity Catalog metastore process', 'Only as a Git provider action', 'On each analyst laptop'),
+      Q('plat-600-4', 'Platform', 'The Databricks control plane is best described as:', 'Managed services for the workspace, scheduling, and metadata, separate from classic compute in your cloud account', 'The Spark executors that scan your files', 'A Git branch', 'The VACUUM retention timer')
+    ],
+    [
+      Q('plat-800-1', 'Platform', 'You need a rollback after a bad ingest, history you can audit, and one governed copy for BI. What fits?', 'Delta tables with time travel, governed by Unity Catalog', 'CSV copies on DBFS with hand-made version folders', 'In-memory DataFrames as the only store', 'A warehouse with no transaction log'),
+      Q('plat-800-2', 'Platform', 'A nightly production notebook should be scheduled on jobs compute rather than:', 'A shared all-purpose cluster that stays up for interactive users', 'A Lakeflow Job', 'A Unity Catalog table as the output', 'A Git folder that holds the notebook'),
+      Q('plat-800-3', 'Platform', 'An instance pool speeds classic cluster startup. The cost tradeoff is:', 'Warm instances can still incur cloud VM cost while they sit idle', 'Idle pool VMs are free because they are powered off', 'Pools replace Unity Catalog', 'Pools are required before COPY INTO will run'),
+      Q('plat-800-4', 'Platform', 'A single-node cluster is a weak choice for many people running SQL at once because:', 'It does not provide a shared autoscaling SQL warehouse', 'Databricks SQL cannot query Delta tables', 'Warehouses cannot use Unity Catalog', 'Notebooks cannot be scheduled')
+    ],
+    [
+      Q('plat-1000-1', 'Platform', 'Setting VACUUM retention too short can remove:', 'Data files still needed to time travel to an older version', 'Unity Catalog grants on the table', 'Git history for the notebook', 'The job task graph'),
+      Q('plat-1000-2', 'Platform', 'A bad MERGE must be undone by returning the Delta table to an earlier version. Which command?', 'RESTORE TABLE to that VERSION AS OF or TIMESTAMP AS OF', 'VACUUM RETAIN 0 HOURS', 'ALTER TABLE ... UNSET MANAGED', 'OPTIMIZE'),
+      Q('plat-1000-3', 'Platform', 'Occasional analyst SQL is cheaper on a serverless SQL warehouse than on a large classic cluster you leave running because:', 'Serverless starts quickly and scales with load instead of billing a large cluster while it is idle', 'Serverless refuses Delta tables', 'A classic cluster cannot be turned off', 'GRANT statements replace SQL queries'),
+      Q('plat-1000-4', 'Platform', 'You want a SQL warehouse on classic compute in your own cloud account, not Databricks-managed serverless. Choose:', 'A classic or pro SQL warehouse', 'A serverless SQL warehouse', 'A Git folder', 'A streaming table')
+    ]
   ]},
-  { name: 'Delta Lake', clues: [
-    ['Delta Lake stores table data files in this open-source columnar format', 'Parquet', 'ORC', 'Avro', 'JSON'],
-    ["The Delta transaction log lives in this subdirectory of the table's location", '_delta_log', '_checkpoints', '_spark_metadata', '_delta_commit'],
-    ['Using VERSION AS OF or TIMESTAMP AS OF to query an older table snapshot is called this', 'Time travel', 'RESTORE TABLE', 'Change data feed', 'VACUUM'],
-    ['This command deletes data files no longer referenced by the table, with a default retention threshold of 7 days', 'VACUUM', 'OPTIMIZE', 'RESTORE TABLE', 'DELETE FROM'],
-    ['This command compacts small files into larger ones; on tables without liquid clustering it can add ZORDER BY', 'OPTIMIZE', 'VACUUM', 'ANALYZE TABLE', 'CONVERT TO DELTA']
+  { name: 'Ingestion', domain: 'Ingestion', pools: [
+    [
+      Q('ing-200-1', 'Ingestion', 'Auto Loader is started by passing which value to format()?', 'cloudFiles', 'autoloader', 'jdbc', 'delta'),
+      Q('ing-200-2', 'Ingestion', 'Which SQL command loads files into a Delta table and skips files it has already loaded?', 'COPY INTO', 'VACUUM', 'OPTIMIZE', 'RESTORE TABLE'),
+      Q('ing-200-3', 'Ingestion', 'Lakeflow Connect managed connectors land ingested data in:', 'Unity Catalog tables', 'A Git folder', 'The bundle YAML only', 'A path that exists only on the driver'),
+      Q('ing-200-4', 'Ingestion', 'Auto Loader directory-listing mode discovers files by:', 'Listing the source directory', 'Applying a column mask', 'Running OPTIMIZE', 'Issuing GRANT')
+    ],
+    [
+      Q('ing-400-1', 'Ingestion', 'The source is Salesforce and a managed connector supports it. What should you use?', 'A Lakeflow Connect managed connector', 'Auto Loader pointed at a mailbox', 'COPY INTO of the Salesforce website', 'A cross join'),
+      Q('ing-400-2', 'Ingestion', 'A nightly folder of stable-schema Parquet files should load with idempotent SQL. Prefer:', 'COPY INTO', 'A continuous job with no record of loaded files', 'A column mask', 'Liquid clustering'),
+      Q('ing-400-3', 'Ingestion', 'JSON files keep gaining fields in a cloud folder you ingest throughout the day. A solid choice is:', 'Auto Loader with a schema evolution mode such as addNewColumns', 'One INSERT with no checkpoint', 'VACUUM', 'ALTER TABLE ... UNSET MANAGED'),
+      Q('ing-400-4', 'Ingestion', 'A notebook uses JDBC because no managed connector exists. How should that load run in production?', 'As a notebook task in a Lakeflow Job', 'Only when someone replays it from a laptop', 'As a column mask with no load', 'As VACUUM of an empty table')
+    ],
+    [
+      Q('ing-600-1', 'Ingestion', 'Auto Loader file events (file notification) are used to:', 'Find new files from cloud notifications instead of listing the whole directory on every run', 'Grant SELECT on the target', 'Pick a clustering key', 'Fail the load whenever an id is null'),
+      Q('ing-600-2', 'Ingestion', 'You want incremental change data from a supported database without hand-written polling. Choose:', 'A Lakeflow Connect database connector', 'Photon', 'A Git folder', 'Predictive optimization'),
+      Q('ing-600-3', 'Ingestion', 'Setting cloudFiles.schemaEvolutionMode to failOnNewColumns means:', 'The load fails when an unexpected new column appears', 'The new column is added and the stream never stops', 'The target table is dropped', 'Values in that column are masked'),
+      Q('ing-600-4', 'Ingestion', 'Standard file ingestion from S3, ADLS, or GCS is done with:', 'Auto Loader or COPY INTO', 'Only a Salesforce connector', 'Only GRANT and REVOKE', 'Only CLUSTER BY')
+    ],
+    [
+      Q('ing-800-1', 'Ingestion', 'Millions of files arrive during the day and the schema gains columns. Which method fits best?', 'Auto Loader', 'Recreating the table from the whole directory on every file', 'A managed SaaS connector for a source that is not files', 'A row filter'),
+      Q('ing-800-2', 'Ingestion', 'Nested JSON arrays need to become rows in a Unity Catalog table. You should:', 'Ingest the files, then parse the structure and explode the arrays', 'Run OPTIMIZE until columns appear on their own', 'Use a column mask as the JSON parser', 'Commit the raw JSON to Git and query the commit'),
+      Q('ing-800-3', 'Ingestion', 'Prefer a managed connector over a custom JDBC notebook when:', 'The source is supported and you want managed incremental ingest, authentication, and retries', 'The source is already a Parquet folder that COPY INTO handles', 'You only need to rename one column', 'You are defining a bundle variable'),
+      Q('ing-800-4', 'Ingestion', 'COPY INTO is the weaker choice when you need:', 'A large continuous file stream with schema evolution', 'A batch SQL load that skips files already copied', 'A Unity Catalog Delta target', 'Idempotent reruns of the same folder')
+    ],
+    [
+      Q('ing-1000-1', 'Ingestion', 'Why can COPY INTO run again without loading the same files twice?', 'It records files it has already loaded and skips them', 'It drops the target table on every run', 'It turns off the transaction log', 'It is allowed to run only once per workspace'),
+      Q('ing-1000-2', 'Ingestion', 'An Auto Loader stream must remember progress so a restart does not reread every file. That memory is:', 'A checkpoint, plus a schema location when the schema is inferred', 'A column mask', 'The job timeout', 'A Git tag'),
+      Q('ing-1000-3', 'Ingestion', 'Databricks audit logs, which an ingest job has to tolerate, are delivered as:', 'JSON files, typically within about 15 minutes after delivery starts, and a later delivery may overwrite a file', 'CSV files that are guaranteed never to change', 'Parquet delivered only once a week', 'A table that rejects every new file'),
+      Q('ing-1000-4', 'Ingestion', 'Choose Lakeflow Connect or a partner connector instead of Auto Loader when:', 'The source is an application or database, not files on cloud storage', 'The data is already Parquet in a volume', 'You only need a single COPY INTO', 'You are masking a column')
+    ]
   ]},
-  { name: 'Unity Catalog', clues: [
-    ["In Unity Catalog's three-level namespace, this level comes first, before schema and table", 'Catalog', 'Metastore', 'Schema', 'Volume'],
-    ['This SQL command gives a privilege such as SELECT on a table to a user or group', 'GRANT', 'REVOKE', 'SHOW GRANTS', 'ALTER'],
-    ['This top-level Unity Catalog container stores metadata and is attached to workspaces in a region', 'Metastore', 'Catalog', 'Workspace', 'External location'],
-    ['Unity Catalog automatically captures this, showing how data flows between tables and columns', 'Data lineage', 'Audit logs', 'Table history', 'Column masks'],
-    ['This Unity Catalog object combines a storage credential with a cloud storage path', 'External location', 'Storage credential', 'External volume', 'External table']
+  { name: 'Transformation', domain: 'Transformation', pools: [
+    [
+      Q('trn-200-1', 'Transformation', 'In the medallion layout, raw ingested data lands in which layer?', 'Bronze', 'Silver', 'Gold', 'A SQL warehouse'),
+      Q('trn-200-2', 'Transformation', 'Cleaned, conformed data that is not yet a business aggregate belongs in which layer?', 'Silver', 'Bronze', 'A checkpoint folder', 'An init script'),
+      Q('trn-200-3', 'Transformation', 'Which join keeps every left-side row when the right side has no match?', 'A left join', 'An inner join', 'A cross join used as a filter', 'EXCEPT on the keys only'),
+      Q('trn-200-4', 'Transformation', 'explode on an array column produces:', 'One output row per array element', 'A masked copy of the column', 'A clustered copy of the file', 'A GRANT on the array')
+    ],
+    [
+      Q('trn-400-1', 'Transformation', 'A batch DataFrame must keep one row per customer_id and event_time. Use:', 'dropDuplicates on those columns', 'VACUUM', 'A column mask', 'OPTIMIZE'),
+      Q('trn-400-2', 'Transformation', 'A small lookup joins to a huge fact table. How do you avoid shuffling the fact side?', 'Broadcast the small table', 'Cross join the two tables', 'Set the shuffle partition count to 1', 'Add a file arrival trigger'),
+      Q('trn-400-3', 'Transformation', 'In Databricks SQL, which statement keeps duplicate rows when stacking two queries?', 'UNION ALL', 'UNION, which returns distinct rows', 'INTERSECT', 'EXCEPT'),
+      Q('trn-400-4', 'Transformation', 'Which operation renames a DataFrame column and does not change the row count?', 'withColumnRenamed', 'explode', 'dropDuplicates', 'A cross join')
+    ],
+    [
+      Q('trn-600-1', 'Transformation', 'A gold aggregate should be stored and refreshed, not recomputed on every dashboard open. Use:', 'A materialized view', 'A normal view', 'A file arrival trigger', 'A column mask'),
+      Q('trn-600-2', 'Transformation', 'Which object is the incremental target for an append-only ingest stream?', 'A streaming table', 'A normal view recomputed by every reader', 'A bundle target', 'An external location'),
+      Q('trn-600-3', 'Transformation', 'A normal view is the right object when you want:', 'A saved query with no second copy of the data, computed when someone reads it', 'A precomputed aggregate refreshed on a schedule', 'Exactly-once ingestion of files', 'VACUUM of data files that belong to the view'),
+      Q('trn-600-4', 'Transformation', 'spark.sql.shuffle.partitions controls:', 'How many partitions a shuffle uses', 'Who can SELECT a table', 'The bundle target name', 'The default VACUUM retention')
+    ],
+    [
+      Q('trn-800-expect', 'Transformation', 'A Lakeflow Spark Declarative Pipeline (Lakeflow pipelines, formerly Delta Live Tables) attaches a data quality rule to a streaming table and drops rows that fail it. What is the feature?', 'What are expectations?', 'What are CHECK constraints?', 'What are row filters?', 'What are column masks?', EXPECT_SQL),
+      Q('trn-800-2', 'Transformation', 'Moving raw bronze rows into a reliable silver table usually means:', 'Filtering bad nulls, standardizing types, and writing a new silver table', 'Disabling the transaction log', 'Granting ALL PRIVILEGES ON CATALOG to public', 'Turning off schema checks on every table'),
+      Q('trn-800-3', 'Transformation', 'An expectation written with ON VIOLATION FAIL UPDATE will:', 'Fail the pipeline update when a row breaks the rule', 'Keep the bad row and only record a metric', 'Mask the column for every user', 'Convert the job into a SQL warehouse'),
+      Q('trn-800-4', 'Transformation', 'An expectation that says EXPECT and does not say ON VIOLATION will:', 'Keep the invalid row and record the failure (warn)', 'Drop the row before the write', 'Drop the table', 'Revoke SELECT')
+    ],
+    [
+      Q('trn-1000-1', 'Transformation', 'A pipeline expectation constraint must not contain:', 'A subquery that reads another table', 'A Boolean such as id IS NOT NULL', 'A comparison of two columns on the same row', 'A check that a column IS NOT NULL'),
+      Q('trn-1000-2', 'Transformation', 'Bad orders must be removed before they are written, valid rows kept, and the removals counted. Which action?', 'ON VIOLATION DROP ROW', 'ON VIOLATION FAIL UPDATE', 'A query-time row filter', 'SET MASK on the column'),
+      Q('trn-1000-3', 'Transformation', 'Late corrections must show up in a gold aggregate that matches its defining query. Prefer:', 'A materialized view, which refreshes to that query', 'A streaming table treated as a full rebuild of an aggregate on every dashboard click', 'A normal view when every reader should rescan bronze for a heavy aggregate', 'COPY INTO of the dashboard'),
+      Q('trn-1000-4', 'Transformation', 'spark.sql.autoBroadcastJoinThreshold controls:', 'The size under which Spark may broadcast a join side on its own', 'The task timeout on a job', 'How many Git branches you can create', 'Whether AQE is a Unity Catalog privilege')
+    ]
   ]},
-  { name: 'Databricks SQL', clues: [
-    ['This compute resource runs SQL queries in Databricks SQL, available in serverless, pro and classic types', 'SQL warehouse', 'All-purpose cluster', 'Job cluster', 'Model serving endpoint'],
-    ['This SQL statement upserts rows from a source into a Delta table using WHEN MATCHED / WHEN NOT MATCHED', 'MERGE INTO', 'INSERT INTO', 'UPDATE', 'COPY INTO'],
-    ["This command shows a Delta table's version history, including operations and timestamps", 'DESCRIBE HISTORY', 'DESCRIBE DETAIL', 'DESCRIBE EXTENDED', 'SHOW PARTITIONS'],
-    ['Known by its 4-letter acronym, this statement creates a table and fills it from a query in one step', 'CTAS (CREATE TABLE AS SELECT)', 'CREATE VIEW AS SELECT', 'INSERT INTO ... SELECT', 'CREATE TABLE LIKE'],
-    ['This SQL command loads files into a Delta table idempotently, skipping files it has already loaded', 'COPY INTO', 'MERGE INTO', 'LOAD DATA', 'INSERT INTO']
+  { name: 'Lakeflow Jobs', domain: 'Lakeflow Jobs', pools: [
+    [
+      Q('job-200-1', 'Lakeflow Jobs', 'A Lakeflow Job is a graph of:', 'Tasks that can depend on one another', 'Metastores', 'VACUUM generations', 'Git remotes'),
+      Q('job-200-2', 'Lakeflow Jobs', 'Which trigger starts a job from a clock or cron expression?', 'A scheduled trigger', 'A file arrival trigger', 'A column mask', 'bundle validate'),
+      Q('job-200-3', 'Lakeflow Jobs', 'A notebook task in a Lakeflow Job:', 'Runs a notebook', 'Masks a column', 'Creates an external location', 'Chooses clustering keys by itself'),
+      Q('job-200-4', 'Lakeflow Jobs', 'If an upstream task fails, downstream tasks that require its success are:', 'Skipped', 'Always started anyway', 'Turned into SQL warehouses', 'Granted SELECT on the job')
+    ],
+    [
+      Q('job-400-1', 'Lakeflow Jobs', 'A job should start because Unity Catalog tables changed, not because the clock fired. Use:', 'A table update trigger', 'A column mask', 'OPTIMIZE', 'A Git commit as the only scheduler'),
+      Q('job-400-2', 'Lakeflow Jobs', 'Which task type runs a Lakeflow pipeline as one step of a job?', 'A pipeline task', 'A dashboard task', 'A row filter', 'A file arrival trigger'),
+      Q('job-400-3', 'Lakeflow Jobs', 'Task retries exist to:', 'Run a failed task again, up to a configured count', 'Mask personally identifiable columns', 'Convert a managed table to external', 'Turn off the transaction log'),
+      Q('job-400-4', 'Lakeflow Jobs', 'A SQL task in a job:', 'Runs a SQL query', 'Replaces Auto Loader file discovery', 'Broadcasts a DataFrame by itself', 'Rolls back SET MANAGED')
+    ],
+    [
+      Q('job-600-1', 'Lakeflow Jobs', 'A later task should run only when a condition is true. Which control-flow task is that?', 'An If/else condition task', 'A second metastore', 'VACUUM', 'A broadcast hint'),
+      Q('job-600-2', 'Lakeflow Jobs', 'The same notebook must run once for each value in a list. Which control-flow task is that?', 'A For each task', 'A column mask', 'Schema evolution', 'An external location'),
+      Q('job-600-3', 'Lakeflow Jobs', 'A dashboard task is used to:', 'Refresh a dashboard as a step in the job', 'Ingest database change data', 'Create a Git branch', 'Attach a row filter'),
+      Q('job-600-4', 'Lakeflow Jobs', 'A file arrival trigger watches for new files in:', 'A Unity Catalog volume or external location', 'A folder on a developer laptop', 'A column mask', 'A Git branch')
+    ],
+    [
+      Q('job-800-1', 'Lakeflow Jobs', 'Files land in cloud storage at random times. The job should run soon after each drop and stay idle when nothing arrives. Choose:', 'A file arrival trigger', 'A continuous trigger', 'A schedule every five minutes whether or not files arrive', 'Manual runs only'),
+      Q('job-800-2', 'Lakeflow Jobs', 'A task ends as Timed Out after 45 minutes, but the work can need 60. What do you raise?', 'The task timeout threshold', 'Only the upstream dependency type', 'Only the maximum concurrent runs', 'The name of the SQL warehouse'),
+      Q('job-800-3', 'Lakeflow Jobs', 'Which list matches task types the associate exam expects you to wire into a job?', 'Notebook, SQL, dashboard, and pipeline tasks', 'Only VACUUM, GRANT, and OPTIMIZE', 'Only Git commit and Git push', 'Only a row filter and a column mask'),
+      Q('job-800-4', 'Lakeflow Jobs', 'Retries differ from a file arrival trigger because retries:', 'Repeat a task that failed, while file arrival starts a run when new files land', 'Are a Unity Catalog privilege', 'Compact small files', 'Rename a column')
+    ],
+    [
+      Q('job-1000-1', 'Lakeflow Jobs', 'A continuous trigger will:', 'Start another run when the current run finishes or fails, so the job keeps going', 'Start a run only when a new file arrives and stay idle otherwise', 'Run once when someone clicks Run now and then refuse to run again', 'Grant privileges on the job'),
+      Q('job-1000-2', 'Lakeflow Jobs', 'After a fix, failed tasks and the skipped tasks behind them should run again, not the tasks that succeeded. Use:', 'Repair the run so failed and skipped tasks rerun', 'ALTER TABLE ... UNSET MANAGED on the job', 'VACUUM of the workspace', 'A new column mask'),
+      Q('job-1000-3', 'Lakeflow Jobs', 'Pick a schedule instead of a table update trigger when:', 'The business wants the job at a fixed time even if the source tables did not change', 'The job must wait until those tables are updated', 'You need to mask a column', 'You need to skip files already loaded'),
+      Q('job-1000-4', 'Lakeflow Jobs', 'An If/else task can keep a downstream pipeline task from running when:', 'The condition is false, for example when a check finds no new rows', 'The table happens to be managed', 'Photon is enabled', 'The file format is Parquet')
+    ]
   ]},
-  { name: 'Data Engineering / ETL', clues: [
-    ['In the medallion architecture, raw ingested data lands in this layer', 'Bronze', 'Silver', 'Gold', 'Platinum'],
-    ['Auto Loader is invoked with this value passed to spark.readStream.format()', 'cloudFiles', 'autoloader', 'delta', 'parquet'],
-    ['This medallion layer holds business-level aggregates ready for reporting', 'Gold', 'Bronze', 'Silver', 'Platinum'],
-    ['In Lakeflow pipelines (formerly Delta Live Tables), these SQL boolean checks on each record can warn, drop the row, or fail the update', 'Expectations', 'CHECK constraints', 'Assertions', 'Lakehouse Monitoring'],
-    ['This Structured Streaming option sets where progress info is stored so a query can recover after failure', 'checkpointLocation', 'watermark', 'outputMode', 'trigger']
+  { name: 'CI/CD', domain: 'CI/CD', pools: [
+    [
+      Q('cd-200-1', 'CI/CD', 'Workspace folders tied to a Git provider, formerly called Repos, are:', 'Git folders', 'Volumes', 'SQL warehouses', 'External locations'),
+      Q('cd-200-2', 'CI/CD', 'Declarative Automation Bundles were formerly named:', 'Databricks Asset Bundles', 'Delta Live Tables', 'Repos', 'The Hive metastore'),
+      Q('cd-200-3', 'CI/CD', 'Which CLI command checks a bundle before you deploy it?', 'databricks bundle validate', 'VACUUM', 'OPTIMIZE', 'RESTORE TABLE'),
+      Q('cd-200-4', 'CI/CD', 'A bundle promotes one project through dev, test, and prod by using:', 'Targets', 'A separate transaction log for each SQL function', 'Column masks', 'Shuffle partitions')
+    ],
+    [
+      Q('cd-400-1', 'CI/CD', 'Which command deploys a bundle to the prod target?', 'databricks bundle deploy --target prod', 'VACUUM of the prod catalog', 'OPTIMIZE on the prod warehouse', 'GRANT of the prod catalog to public'),
+      Q('cd-400-2', 'CI/CD', 'Warehouse size and similar settings that differ by environment should be:', 'Bundle variables and target overrides', 'A copied notebook per environment with secrets pasted in', 'A different table format per environment', 'Row filters'),
+      Q('cd-400-3', 'CI/CD', 'Which CLI command starts a job the bundle has deployed?', 'databricks bundle run', 'databricks bundle vacuum', 'RESTORE TABLE', 'ALTER TABLE ... UNSET MANAGED'),
+      Q('cd-400-4', 'CI/CD', 'From a Git folder in the workspace you can:', 'Switch branches, commit, and push', 'VACUUM the Git object', 'Mask a column inside the Git provider', 'Turn a commit hash into a classic cluster by itself')
+    ],
+    [
+      Q('cd-600-1', 'CI/CD', 'A database password must not be committed in the bundle or the notebook. Feed a bundle variable from:', 'An environment variable whose name starts with BUNDLE_VAR_', 'A passwords.txt file committed beside databricks.yml', 'spark.conf.set of the literal password in the notebook', 'A comment in the YAML'),
+      Q('cd-600-2', 'CI/CD', 'Declarative Automation Bundles are the right tool when you need to:', 'Version jobs and pipelines in Git and deploy that definition across environments', 'Replace Delta Lake', 'Mask a column', 'Broadcast one side of a join'),
+      Q('cd-600-3', 'CI/CD', 'Among the exam objectives, bundles deploy which workspace assets?', 'Lakeflow Jobs and Lakeflow pipelines', 'Only the Spark UI theme', 'Only a VACUUM retention number', 'Only keyboard shortcuts'),
+      Q('cd-600-4', 'CI/CD', 'Opening a pull request from the Databricks Git integration is part of:', 'The Git folder workflow', 'Predictive optimization', 'A row-filter function', 'Auto Loader file events')
+    ],
+    [
+      Q('cd-800-1', 'CI/CD', 'Target overrides let you:', 'Keep one codebase while dev and prod differ in settings such as schedule or warehouse size', 'Force a separate fork of the repo for every environment', 'Store production secrets in Git', 'Turn off schema enforcement by deleting the Delta log'),
+      Q('cd-800-2', 'CI/CD', 'Before a changed job definition goes live in prod, CI should:', 'Run databricks bundle validate, then databricks bundle deploy --target prod', 'VACUUM the catalog, then UNSET MANAGED', 'Disable Unity Catalog, then COPY INTO the YAML', 'Lower the shuffle partition count, then GRANT SELECT to public'),
+      Q('cd-800-3', 'CI/CD', 'A developer edits a notebook on a branch in a Git folder and opens a pull request. That is:', 'The Git folder development workflow', 'A substitute for bundle deploy', 'A column mask', 'A file arrival trigger'),
+      Q('cd-800-4', 'CI/CD', 'CI should deploy bundle source from:', 'The Git revision it checked out, using the Databricks CLI', 'A private workspace folder with no remote', 'A streaming checkpoint', 'The body of a column-mask function')
+    ],
+    [
+      Q('cd-1000-1', 'CI/CD', 'One bundle with targets is safer than three drifted notebook copies because:', 'The same definition is promoted and only the target settings change', 'Targets turn off ACID transactions', 'Notebooks cannot be committed to Git', 'Jobs are not allowed to run notebooks'),
+      Q('cd-1000-2', 'CI/CD', 'databricks bundle validate earns its place in CI because it:', 'Reports configuration errors before a deploy', 'Compacts Delta files', 'Rewrites Unity Catalog grants', 'Lowers the shuffle partition count'),
+      Q('cd-1000-3', 'CI/CD', 'Hard-coding a password with spark.conf.set in a notebook is a poor bundle practice because:', 'The secret becomes part of the source Git stores and the bundle deploys', 'Notebooks cannot read Spark configuration', 'A job cannot run a notebook', 'Bundles can only read secrets from a Parquet file'),
+      Q('cd-1000-4', 'CI/CD', 'A Lakeflow pipeline moves from dev to prod without a rewrite of its logic when you:', 'Deploy the same pipeline resource to another bundle target', 'Paste the pipeline into a dashboard', 'Convert it with UNSET MANAGED', 'Turn the pipeline into a row filter')
+    ]
   ]},
-  { name: 'Lakehouse & Workflows', clues: [
-    ["Databricks' term for an architecture combining the best of data lakes and data warehouses", 'Lakehouse', 'Data lake', 'Data warehouse', 'Medallion architecture'],
-    ['A Databricks job is made up of one or more of these units of work, which can depend on each other', 'Tasks', 'Spark stages', 'Notebooks', 'Job runs'],
-    ['Formerly called Repos, this feature syncs workspace code with a Git provider', 'Git folders', 'Repos', 'DBFS', 'GitHub Actions'],
-    ['Unlike all-purpose compute, this classic compute type starts for a job run and terminates automatically when the run completes', 'Jobs compute (a job cluster)', 'All-purpose compute', 'SQL warehouse', 'Instance pool'],
-    ['Developed by Databricks, this open protocol shares live Delta Lake and Parquet data across platforms without copying it', 'Delta Sharing (OpenSharing)', 'Lakehouse Federation', 'Deep clone', 'Partner Connect']
+  { name: 'Troubleshooting', domain: 'Troubleshooting', pools: [
+    [
+      Q('ts-200-1', 'Troubleshooting', 'One task in a stage runs far longer and reads much more shuffle data than the median task. That pattern is:', 'Data skew', 'A missing GRANT', 'A Git merge conflict', 'A healthy narrow transformation'),
+      Q('ts-200-2', 'Troubleshooting', 'Shuffle bytes written to disk because memory could not hold them are:', 'Disk spill', 'A column mask', 'Time travel', 'A bundle target'),
+      Q('ts-200-3', 'Troubleshooting', 'A large join or groupBy that moves rows across executors performs:', 'A shuffle', 'A narrow map that never exchanges rows', 'A Unity Catalog grant', 'A Git push'),
+      Q('ts-200-4', 'Troubleshooting', 'Duration and shuffle size for the tasks in a stage are read in:', 'The Spark UI', 'Git history alone', 'databricks.yml alone', 'A row-filter editor')
+    ],
+    [
+      Q('ts-400-1', 'Troubleshooting', 'Liquid clustering is the layout feature that takes the place of:', 'Partitioning plus ZORDER', 'GRANT and REVOKE', 'COPY INTO', 'A SQL warehouse'),
+      Q('ts-400-2', 'Troubleshooting', 'Predictive optimization can automatically run which maintenance on a Unity Catalog managed table?', 'OPTIMIZE, VACUUM, and ANALYZE', 'GRANT, bundle deploy, and a Git commit', 'ZORDER only', 'A file arrival trigger'),
+      Q('ts-400-3', 'Troubleshooting', 'Adaptive Query Execution skew handling is built for:', 'Skewed joins', 'Splitting a skewed groupBy on its own', 'Git conflicts', 'Column masks'),
+      Q('ts-400-4', 'Troubleshooting', 'CLUSTER BY on a Delta table enables:', 'Liquid clustering', 'A row filter', 'A file arrival trigger', 'A pipeline expectation')
+    ],
+    [
+      Q('ts-600-1', 'Troubleshooting', 'A groupBy on customer_id is skewed. AQE is already on, and one task still dominates. A change that fits this aggregation is:', 'Salt the key so the hot value spreads across tasks, then combine the partial aggregates', 'Rely on AQE skew-join handling to split this groupBy', 'Lower the shuffle partition count so the hot key gets even more data', 'Add executors and leave that one partition as a single task'),
+      Q('ts-600-2', 'Troubleshooting', 'Heavy disk spill in a stage usually means:', 'Partitions do not fit in memory, often because of skew or partitions that are too large', 'A missing GRANT made Spark spill privileges to disk', 'The Git branch is behind the remote', 'The object is a view, so it has data files to spill'),
+      Q('ts-600-3', 'Troubleshooting', 'CLUSTER BY AUTO picks clustering keys with the help of:', 'Predictive optimization, based on how the table is queried', 'A ZORDER list rewritten by hand every night', 'A column mask', 'The job timeout'),
+      Q('ts-600-4', 'Troubleshooting', 'To see whether this job run is slower than recent ones, open:', 'The job run history', 'Only the Parquet page index', 'BUNDLE_VAR_ values', 'A column-mask policy')
+    ],
+    [
+      Q('ts-800-1', 'Troubleshooting', 'When predictive optimization runs OPTIMIZE, it does not:', 'Apply ZORDER', 'Compact files on eligible managed tables', 'Run VACUUM', 'Run ANALYZE'),
+      Q('ts-800-2', 'Troubleshooting', 'A classic cluster fails during startup with a library error, before any Spark stage runs. Treat that as:', 'A startup or library conflict', 'Shuffle skew', 'A bad liquid clustering key', 'An expectation that drops rows'),
+      Q('ts-800-3', 'Troubleshooting', 'One executor runs out of memory and the stage shows a huge maximum shuffle read next to a small median. Look first for:', 'Skew or an oversized partition', 'A typo in a bundle target name', 'A missing Git remote', 'The name of a row filter'),
+      Q('ts-800-4', 'Troubleshooting', 'Lowering spark.sql.shuffle.partitions while one key is enormous will:', 'Make partitions larger and can make the skew worse', 'Salt the hot key automatically', 'Turn on predictive optimization', 'Convert the table to an external table')
+    ],
+    [
+      Q('ts-1000-1', 'Troubleshooting', 'Liquid clustering beats a fixed partition column when you:', 'May change clustering keys later and recluster incrementally, instead of rewriting the table only to change partitions', 'Need to hide rows from a group of users', 'Need a separate CI target', 'Need to drop the transaction log'),
+      Q('ts-1000-2', 'Troubleshooting', 'Predictive optimization maintains:', 'Unity Catalog managed tables, not external tables', 'External tables only', 'Git folders', 'Classic job clusters, as if they were tables'),
+      Q('ts-1000-3', 'Troubleshooting', 'Minimum, median, and maximum shuffle read for tasks in a stage appear in:', 'The Spark UI stage summary', 'databricks.yml', 'A column-mask policy', 'The Git commit list'),
+      Q('ts-1000-4', 'Troubleshooting', 'Downstream tasks never started because the task before them failed. You confirm that in:', 'The job run task graph and task statuses', 'VACUUM output', 'The broadcast threshold setting', 'An unrelated view definition')
+    ]
+  ]},
+  { name: 'Governance', domain: 'Governance', pools: [
+    [
+      Q('gov-200-1', 'Governance', 'The three-level Unity Catalog name of a table is:', 'catalog.schema.table', 'metastore.catalog.table as the name you must query', 'workspace.cluster.table', 'schema.table with no catalog'),
+      Q('gov-200-2', 'Governance', 'Which container sits above catalogs in Unity Catalog?', 'The metastore', 'The schema', 'A single Parquet file', 'A job task'),
+      Q('gov-200-3', 'Governance', 'Which statement gives a group SELECT on a table?', 'GRANT', 'VACUUM', 'OPTIMIZE', 'COPY INTO'),
+      Q('gov-200-4', 'Governance', 'Which statement removes a privilege that had been granted?', 'REVOKE', 'OPTIMIZE', 'CLUSTER BY', 'bundle validate')
+    ],
+    [
+      Q('gov-400-1', 'Governance', 'DROP TABLE on a managed table differs from DROP TABLE on an external table because the managed drop:', 'Deletes the data files as well as the catalog entry', 'Can never be issued with SQL', 'Leaves both the files and the catalog entry in place', 'Deletes the metastore'),
+      Q('gov-400-2', 'Governance', 'CREATE TABLE in Unity Catalog with no LOCATION creates:', 'A managed table', 'An external table', 'A normal view', 'A Lakeflow Job'),
+      Q('gov-400-3', 'Governance', 'A column mask is how you:', 'Return a redacted value for a sensitive column, depending on who runs the query', 'Skip files that COPY INTO already loaded', 'Cluster data files', 'Retry a failed task'),
+      Q('gov-400-4', 'Governance', 'A row filter is how you:', 'Leave out rows the current user is not allowed to see', 'Compact small files', 'Start a job from a cron expression', 'Add a column while ingesting files')
+    ],
+    [
+      Q('gov-600-1', 'Governance', 'Only one account group should see a full national id. Everyone else should see a masked value in the same table. Use:', 'A column mask that checks a group function such as is_account_group_member', 'A separate copy of the table for each group', 'A cloud IAM policy stored as a Delta column property', 'A deny on the whole catalog so nobody can query the table'),
+      Q('gov-600-2', 'Governance', 'A row filter function returns:', 'A Boolean, and rows that do not pass are omitted from the result', 'A cloud path for VACUUM to delete', 'A Git branch name', 'The shuffle partition count'),
+      Q('gov-600-3', 'Governance', 'To query catalog.schema.orders, a principal needs:', 'USE CATALOG, USE SCHEMA, and SELECT', 'Only permission to open the Spark UI', 'Only permission to deploy a bundle', 'Only permission to run OPTIMIZE'),
+      Q('gov-600-4', 'Governance', 'Unity Catalog principals you can grant to include:', 'Users, groups, and service principals', 'Job clusters only', 'Parquet files only', 'Git commits only')
+    ],
+    [
+      Q('gov-800-1', 'Governance', 'The same mask should apply to every column tagged as sensitive in a schema, including tables created later. Prefer:', 'An ABAC column mask policy on that schema', 'A manual mask on each future column and no policy', 'A COPY INTO option', 'A file arrival trigger'),
+      Q('gov-800-2', 'Governance', 'ABAC policies decide which objects they apply to by using:', 'Governed tags', 'Spark UI stage ids', 'Bundle target names', 'Shuffle partition counts'),
+      Q('gov-800-3', 'Governance', 'An ABAC DENY policy differs from REVOKE because the policy:', 'Denies MANAGE ACCESS CONTROL despite other grants, and stays until the policy is dropped', 'Is the same operation as REVOKE', 'Deletes the underlying data files', 'Compacts small files'),
+      Q('gov-800-4', 'Governance', 'You convert an external Unity Catalog table into a managed table with:', 'ALTER TABLE ... SET MANAGED', 'VACUUM', 'GRANT MANAGED', 'COPY INTO')
+    ],
+    [
+      Q('gov-1000-1', 'Governance', 'Within 14 days, on a current runtime, you undo an external-to-managed conversion with:', 'ALTER TABLE ... UNSET MANAGED', 'DROP TABLE plus timestamp time travel, expecting an external table to reappear', 'ALTER TABLE ... SET EXTERNAL', 'RESTORE, which changes managed versus external on its own'),
+      Q('gov-1000-2', 'Governance', 'After UNSET MANAGED succeeds, Databricks deletes data that had been written in the managed location:', 'Seven days after the rollback', 'In the same minute, with no wait', 'Never', 'Only if you set VACUUM retention to zero yourself that day'),
+      Q('gov-1000-3', 'Governance', 'A row filter attached to one table differs from an ABAC row filter policy because:', 'The table filter covers that table, while an ABAC policy can cover many tagged tables in a catalog or schema', 'They are spelled as the same command', 'An ABAC policy rewrites Parquet files in place', 'A row filter relayouts files the way OPTIMIZE does'),
+      Q('gov-1000-4', 'Governance', 'DROP TABLE on an external table:', 'Removes the Unity Catalog entry and leaves the files in cloud storage', 'Always deletes the underlying files', 'Turns the files into a SQL warehouse', 'Revokes every privilege in the metastore')
+    ]
   ]}
 ];
-const FINAL = {
-  cat: 'Delta Lake',
-  clue: "This Delta Lake feature rejects writes whose columns or data types don't match the table's schema",
-  a: 'Schema enforcement',
-  wrong: ['Schema evolution', 'Schema on read', 'Column mapping']
-};
+
+const FINALS = [
+  Q('fin-1', 'Platform', 'A MERGE wrote bad rows an hour ago. History is still available and VACUUM has not removed those files. How do you return the Delta table to the earlier version?', 'RESTORE the table to that version or timestamp', 'VACUUM RETAIN 0 HOURS', 'DROP the managed table and expect the files to come back as a view', 'Turn off Unity Catalog'),
+  Q('fin-2', 'Ingestion', 'About a million JSON files land in cloud storage each day, and new fields appear without notice. Which ingest design fits?', 'Auto Loader with schema evolution and a checkpoint', 'COPY INTO that rebuilds the table from scratch for every file', 'A column mask used as the loader', 'A weekly manual upload with no checkpoint'),
+  Q('fin-3', 'CI/CD', 'CI must deploy the same Lakeflow Job to prod without committing a warehouse id or a database password. What belongs in the bundle?', 'A target override for the warehouse and a variable supplied with BUNDLE_VAR_ for the secret', 'The password written in databricks.yml', 'A passwords.txt file in the repository', 'A second notebook copy used only in prod, with the secret inside it'),
+  Q('fin-4', 'Governance', 'Every new table in a schema should hide other regions rows based on a tag, without a hand-written filter on each future table. What do you create?', 'An ABAC row filter policy on that schema', 'A separate schema for each analyst', 'A COPY INTO option named FILTER', 'A longer job timeout')
+];
+
+function checkPack() {
+  const ids = new Set();
+  function one(c, expectDomain) {
+    if (!c || typeof c.id !== 'string' || ids.has(c.id)) throw new Error('bad id ' + (c && c.id));
+    ids.add(c.id);
+    if (!DOMAINS.includes(c.domain)) throw new Error('domain ' + c.id);
+    if (expectDomain && c.domain !== expectDomain) throw new Error('domain mismatch ' + c.id);
+    const opts = [c.a].concat(c.wrong);
+    if (opts.length !== 4 || new Set(opts).size !== 4 || opts.some(function (x) { return typeof x !== 'string' || !x; })) {
+      throw new Error('options ' + c.id);
+    }
+    if (typeof c.q !== 'string' || !c.q.trim()) throw new Error('question ' + c.id);
+    if (typeof c.code !== 'string') throw new Error('code ' + c.id);
+  }
+  if (CATS.length !== DOMAINS.length) throw new Error('category count');
+  CATS.forEach(function (cat) {
+    if (cat.name !== cat.domain || !DOMAINS.includes(cat.domain)) throw new Error('category ' + cat.name);
+    if (!Array.isArray(cat.pools) || cat.pools.length !== VALS.length) throw new Error('pools ' + cat.name);
+    cat.pools.forEach(function (pool) {
+      if (!Array.isArray(pool) || pool.length !== 4) throw new Error('pool size ' + cat.name);
+      pool.forEach(function (c) { one(c, cat.domain); });
+    });
+  });
+  if (FINALS.length !== 4) throw new Error('finals');
+  FINALS.forEach(function (c) { one(c, null); });
+}
+checkPack();
 
 let S = null;
 let cur = null;
@@ -149,54 +380,98 @@ function shuffle(list) {
   return a;
 }
 
-function buildDeck() {
-  const deck = {};
-  CATS.forEach((cat, c) => {
-    cat.clues.forEach((clue, r) => {
-      const options = shuffle([clue[1], clue[2], clue[3], clue[4]]);
-      deck[c + '-' + r] = { options: options, correct: options.indexOf(clue[1]) };
-    });
-  });
-  const options = shuffle([FINAL.a].concat(FINAL.wrong));
-  deck.final = { options: options, correct: options.indexOf(FINAL.a) };
-  return deck;
+function toDeck(clue) {
+  const options = shuffle([clue.a, clue.wrong[0], clue.wrong[1], clue.wrong[2]]);
+  return {
+    id: clue.id,
+    domain: clue.domain,
+    q: clue.q,
+    code: clue.code || '',
+    options: options,
+    correct: options.indexOf(clue.a)
+  };
+}
+
+function takeClue(pool, seen) {
+  let choices = pool.filter(function (c) { return seen.indexOf(c.id) === -1; });
+  if (!choices.length) {
+    const drop = {};
+    pool.forEach(function (c) { drop[c.id] = true; });
+    seen = seen.filter(function (id) { return !drop[id]; });
+    choices = pool.slice();
+  }
+  const clue = choices[Math.floor(Math.random() * choices.length)];
+  seen = seen.concat([clue.id]);
+  return { clue: clue, seen: seen };
 }
 
 function fresh() {
   const names = (S && Array.isArray(S.names) && S.names.length === 2) ? S.names.slice() : ['Player 1', 'Player 2'];
+  let seen = (S && Array.isArray(S.seen)) ? S.seen.filter(function (id) { return typeof id === 'string'; }) : [];
+  const deck = {};
+  CATS.forEach(function (cat, c) {
+    cat.pools.forEach(function (pool, r) {
+      const picked = takeClue(pool, seen);
+      seen = picked.seen;
+      deck[c + '-' + r] = toDeck(picked.clue);
+    });
+  });
+  const fin = takeClue(FINALS, seen);
+  seen = fin.seen;
+  deck.final = toDeck(fin.clue);
   const pool = [];
-  for (let c = 0; c < 6; c++) for (let r = 1; r < 5; r++) pool.push(c + '-' + r);
+  for (let c = 0; c < CATS.length; c++) {
+    for (let r = 1; r < VALS.length; r++) pool.push(c + '-' + r);
+  }
   const dd = [];
   while (dd.length < 2) {
     const k = pool[Math.floor(Math.random() * pool.length)];
-    if (!dd.includes(k)) dd.push(k);
+    if (dd.indexOf(k) === -1) dd.push(k);
   }
-  return { v: 2, names: names, scores: [0, 0], used: [], dd: dd, deck: buildDeck() };
+  return { v: 3, names: names, scores: [0, 0], used: [], seen: seen, dd: dd, deck: deck };
+}
+
+function validEntry(d) {
+  if (!d || typeof d.id !== 'string' || !DOMAINS.includes(d.domain)) return false;
+  if (typeof d.q !== 'string' || typeof d.code !== 'string') return false;
+  if (!Array.isArray(d.options) || d.options.length !== 4 || new Set(d.options).size !== 4) return false;
+  if (!Number.isInteger(d.correct) || d.correct < 0 || d.correct > 3) return false;
+  return true;
+}
+
+function validDd(k) {
+  const m = /^(\d+)-([1-4])$/.exec(k);
+  if (!m) return false;
+  const c = +m[1];
+  return c >= 0 && c < CATS.length;
 }
 
 function validState(s) {
-  if (!s || s.v !== 2 || !s.deck || !Array.isArray(s.names) || s.names.length !== 2) return false;
+  if (!s || s.v !== 3 || !s.deck || !Array.isArray(s.names) || s.names.length !== 2) return false;
   if (!Array.isArray(s.scores) || s.scores.length !== 2) return false;
-  if (!Array.isArray(s.used) || !Array.isArray(s.dd) || s.dd.length !== 2 || s.dd[0] === s.dd[1]) return false;
-  if (s.dd.some(k => !/^[0-5]-[1-4]$/.test(k))) return false;
-  for (let c = 0; c < 6; c++) {
-    for (let r = 0; r < 5; r++) {
-      const d = s.deck[c + '-' + r];
-      if (!d || !Array.isArray(d.options) || d.options.length !== 4) return false;
-      if (!Number.isInteger(d.correct) || d.correct < 0 || d.correct > 3) return false;
+  if (!Array.isArray(s.used) || !Array.isArray(s.seen) || s.seen.some(function (id) { return typeof id !== 'string'; })) return false;
+  if (!Array.isArray(s.dd) || s.dd.length !== 2 || s.dd[0] === s.dd[1]) return false;
+  if (s.dd.some(function (k) { return !validDd(k); })) return false;
+  for (let c = 0; c < CATS.length; c++) {
+    for (let r = 0; r < VALS.length; r++) {
+      if (!validEntry(s.deck[c + '-' + r])) return false;
     }
   }
-  const f = s.deck.final;
-  if (!f || !Array.isArray(f.options) || f.options.length !== 4) return false;
-  if (!Number.isInteger(f.correct) || f.correct < 0 || f.correct > 3) return false;
-  return true;
+  return validEntry(s.deck.final);
 }
 
 function save() { localStorage.setItem(KEY, JSON.stringify(S)); }
 
 function load() {
   try { S = JSON.parse(localStorage.getItem(KEY) || 'null'); } catch (e) { S = null; }
-  if (!validState(S)) S = fresh();
+  if (!validState(S)) {
+    const prev = S;
+    S = {
+      seen: prev && Array.isArray(prev.seen) ? prev.seen.filter(function (id) { return typeof id === 'string'; }) : [],
+      names: prev && Array.isArray(prev.names) && prev.names.length === 2 ? prev.names.slice() : ['Player 1', 'Player 2']
+    };
+    S = fresh();
+  }
   save();
 }
 
@@ -218,27 +493,27 @@ function beep(freq, dur) {
 function render() {
   const b = M('board');
   b.textContent = '';
-  CATS.forEach(cat => {
+  CATS.forEach(function (cat) {
     const el = document.createElement('div');
     el.className = 'cat';
     el.textContent = cat.name;
     b.appendChild(el);
   });
-  for (let r = 0; r < 5; r++) {
-    for (let c = 0; c < 6; c++) {
+  for (let r = 0; r < VALS.length; r++) {
+    for (let c = 0; c < CATS.length; c++) {
       const k = c + '-' + r;
       const tile = document.createElement('div');
-      const used = S.used.includes(k);
+      const used = S.used.indexOf(k) !== -1;
       tile.className = 'tile' + (used ? ' used' : '');
       tile.textContent = dollars(VALS[r]);
       tile.dataset.k = k;
-      if (!used) tile.onclick = () => openClue(c, r);
+      if (!used) tile.onclick = function () { openClue(c, r); };
       b.appendChild(tile);
     }
   }
   const scores = M('scores');
   scores.textContent = '';
-  [0, 1].forEach(i => {
+  [0, 1].forEach(function (i) {
     const p = document.createElement('div');
     p.className = 'player' + (cur && !cur.final && cur.lock === i ? ' lock' : '');
     p.id = 'p' + i;
@@ -248,27 +523,26 @@ function render() {
     input.spellcheck = false;
     input.autocomplete = 'off';
     input.setAttribute('aria-label', 'Player ' + (i + 1) + ' name');
-    input.addEventListener('input', () => { S.names[i] = input.value; save(); });
+    input.addEventListener('input', function () { S.names[i] = input.value; save(); });
     const adj = document.createElement('span');
     adj.className = 'adj';
-    [-200, 200].forEach(delta => {
+    [-200, 200].forEach(function (delta) {
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.textContent = delta < 0 ? '\u2212' : '+';
       btn.setAttribute('aria-label', (delta < 0 ? 'Subtract' : 'Add') + ' 200 for ' + S.names[i]);
-      btn.onclick = () => { S.scores[i] += delta; save(); render(); };
+      btn.onclick = function () { S.scores[i] += delta; save(); render(); };
       adj.appendChild(btn);
     });
-    const buzzBtn = document.createElement('button');
-    buzzBtn.type = 'button';
-    buzzBtn.className = 'btn buzz';
-    buzzBtn.textContent = 'Buzz (' + (i ? 'L' : 'A') + ')';
-    buzzBtn.onclick = () => buzz(i);
+    const keys = document.createElement('span');
+    keys.className = 'keys';
+    keys.textContent = i === 0 ? '1 2 3 4' : '7 8 9 0';
+    keys.setAttribute('aria-label', 'Player ' + (i + 1) + ' answer keys');
     const score = document.createElement('span');
     score.className = 'score' + (S.scores[i] < 0 ? ' neg' : '');
     score.id = 's' + i;
     score.textContent = dollars(S.scores[i]);
-    p.append(input, adj, buzzBtn, score);
+    p.append(input, adj, keys, score);
     scores.appendChild(p);
   });
   if (cur) liveScores();
@@ -277,7 +551,7 @@ function render() {
 function liveScores() {
   const el = M('mlive');
   el.textContent = '';
-  [0, 1].forEach(i => {
+  [0, 1].forEach(function (i) {
     const span = document.createElement('span');
     if (cur && !cur.final && cur.lock === i) span.className = 'hot';
     span.textContent = S.names[i] + '  ' + dollars(S.scores[i]);
@@ -298,10 +572,36 @@ function hideModal() {
   m.setAttribute('aria-hidden', 'true');
 }
 
+function setDomain(domain) {
+  const el = M('mdomain');
+  el.textContent = domain || '';
+  el.hidden = !domain;
+}
+
+function setClue(text, code) {
+  const box = M('mclue');
+  box.textContent = '';
+  const q = document.createElement('div');
+  q.className = 'qtext';
+  q.textContent = text || '';
+  box.appendChild(q);
+  if (code) {
+    const pre = document.createElement('pre');
+    pre.className = 'code';
+    pre.textContent = code;
+    box.appendChild(pre);
+  }
+}
+
+function clearOpts() {
+  M('mopts').textContent = '';
+  M('mlegend').textContent = '';
+}
+
 function setButtons(specs) {
   const box = M('mbtns');
   box.textContent = '';
-  specs.forEach(spec => {
+  specs.forEach(function (spec) {
     const b = document.createElement('button');
     b.type = 'button';
     b.className = 'btn';
@@ -312,22 +612,8 @@ function setButtons(specs) {
   });
 }
 
-function clueButtons() {
-  const specs = [];
-  const optionsUp = M('mopts').children.length > 0;
-  if (cur && !cur.final && !cur.dd && !cur.done && !cur.resolved && cur.lock === null && optionsUp) {
-    [0, 1].forEach(i => {
-      if (!cur.out.includes(i)) {
-        specs.push({
-          id: 'buzz' + i,
-          label: 'Buzz ' + (S.names[i] || ('Player ' + (i + 1))) + ' (' + (i ? 'L' : 'A') + ')',
-          on: () => buzz(i)
-        });
-      }
-    });
-  }
-  specs.push({ id: 'closeBtn', label: 'Close (Esc)', on: closeClue });
-  return specs;
+function closeSpec() {
+  return { id: 'closeBtn', label: cur && cur.final && cur.scored ? 'Done (Esc)' : 'Close (Esc)', on: closeClue };
 }
 
 function currentDeck() {
@@ -335,21 +621,40 @@ function currentDeck() {
   return cur.final ? S.deck.final : S.deck[cur.k];
 }
 
+function allowedPlayers() {
+  if (!cur || !cur.clueShown || cur.done || cur.resolved) return [];
+  if (cur.final) {
+    if (cur.phase === 'p1') return [0];
+    if (cur.phase === 'p2') return [1];
+    return [];
+  }
+  if (cur.dd) return cur.lock === null ? [] : [cur.lock];
+  return [0, 1].filter(function (p) { return cur.out.indexOf(p) === -1; });
+}
+
+function keyList(player) {
+  return player === 0 ? '1 2 3 4' : '7 8 9 0';
+}
+
 function paint() {
   const d = currentDeck();
-  M('mopts').querySelectorAll('.opt').forEach(btn => {
-    const i = +btn.dataset.i;
-    const wrong = !!(cur && cur.eliminated && cur.eliminated.includes(i));
+  const allowed = allowedPlayers();
+  M('mopts').querySelectorAll('.opt').forEach(function (row) {
+    const i = +row.dataset.i;
+    const wrong = !!(cur && cur.eliminated && cur.eliminated.indexOf(i) !== -1);
     const right = !!(cur && cur.resolved && d && i === d.correct);
-    btn.classList.toggle('wrong', wrong);
-    btn.classList.toggle('right', right);
-    btn.disabled = !!(cur && (wrong || cur.resolved));
-    let badge = btn.querySelector('.badge');
+    row.classList.toggle('wrong', wrong);
+    row.classList.toggle('right', right);
+    row.querySelectorAll('.key').forEach(function (btn) {
+      const player = +btn.dataset.player;
+      btn.disabled = !!(wrong || (cur && cur.resolved) || allowed.indexOf(player) === -1);
+    });
+    let badge = row.querySelector('.badge');
     if (right || wrong) {
       if (!badge) {
         badge = document.createElement('span');
         badge.className = 'badge';
-        btn.appendChild(badge);
+        row.appendChild(badge);
       }
       badge.textContent = right ? 'CORRECT' : 'WRONG';
     } else if (badge) {
@@ -358,58 +663,74 @@ function paint() {
   });
 }
 
-function renderOpts(onPick) {
+function renderOpts() {
   const d = currentDeck();
   const box = M('mopts');
   box.textContent = '';
-  d.options.forEach((text, i) => {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'opt';
-    btn.dataset.i = String(i);
-    const key = document.createElement('span');
-    key.className = 'key';
-    key.textContent = String(i + 1);
+  M('mlegend').textContent = 'P1: 1 2 3 4 = A B C D    ·    P2: 7 8 9 0 = A B C D';
+  d.options.forEach(function (text, i) {
+    const row = document.createElement('div');
+    row.className = 'opt';
+    row.dataset.i = String(i);
+    [0, 1].forEach(function (player) {
+      const key = document.createElement('button');
+      key.type = 'button';
+      key.className = 'key ' + (player ? 'p2' : 'p1');
+      key.dataset.player = String(player);
+      const who = document.createElement('small');
+      who.textContent = player ? 'P2' : 'P1';
+      const face = document.createElement('span');
+      face.textContent = (player ? P2_KEYS : P1_KEYS)[i];
+      key.append(who, document.createTextNode(' '), face);
+      key.setAttribute('aria-label', 'Player ' + (player + 1) + ' answer ' + 'ABCD'[i] + ', key ' + face.textContent);
+      key.addEventListener('click', function () {
+        if (cur && cur.final) finalKey(player, i);
+        else answer(player, i);
+      });
+      row.appendChild(key);
+    });
     const ltr = document.createElement('span');
     ltr.className = 'ltr';
     ltr.textContent = 'ABCD'[i];
     const txt = document.createElement('span');
     txt.className = 'txt';
     txt.textContent = text;
-    btn.append(key, ltr, txt);
-    btn.addEventListener('click', () => onPick(i));
-    box.appendChild(btn);
+    row.append(ltr, txt);
+    box.appendChild(row);
   });
   paint();
 }
 
 function scheduleClose() {
   clearTimeout(closeTimer);
-  closeTimer = setTimeout(() => {
+  closeTimer = setTimeout(function () {
     if (cur && cur.done && !cur.final) closeClue();
   }, 2200);
 }
 
 function openClue(c, r) {
   const k = c + '-' + r;
-  if (S.used.includes(k) || cur) return;
+  if (S.used.indexOf(k) !== -1 || cur) return;
+  const entry = S.deck[k];
   cur = {
     k: k, c: c, r: r, val: VALS[r], lock: null, out: [], eliminated: [],
-    dd: S.dd.includes(k), resolved: false, done: false, clueShown: false, final: false
+    dd: S.dd.indexOf(k) !== -1, resolved: false, done: false, clueShown: false, final: false
   };
-  M('mcat').textContent = CATS[c].name + ' - ' + dollars(VALS[r]);
-  M('mopts').textContent = '';
+  clearOpts();
   M('mstatus').textContent = '';
+  setDomain(entry.domain);
   if (cur.dd) {
     beep(880, .6);
-    M('mclue').textContent = 'DAILY DOUBLE!';
+    M('mcat').textContent = CATS[c].name + ' - ' + dollars(VALS[r]);
+    setClue('DAILY DOUBLE!', '');
     M('mstatus').textContent = 'Who found it?';
     setButtons([
-      { id: 'who0', label: S.names[0], on: () => ddPick(0) },
-      { id: 'who1', label: S.names[1], on: () => ddPick(1) }
+      { id: 'who0', label: S.names[0], on: function () { ddPick(0); } },
+      { id: 'who1', label: S.names[1], on: function () { ddPick(1); } }
     ]);
     showModal();
   } else {
+    M('mcat').textContent = CATS[c].name + ' - ' + dollars(VALS[r]);
     showClue();
     showModal();
   }
@@ -436,7 +757,7 @@ function ddPick(i) {
   status.appendChild(row);
   setButtons([
     { id: 'ddGo', label: 'Show clue', on: ddGo },
-    { id: 'closeBtn', label: 'Close (Esc)', on: closeClue }
+    closeSpec()
   ]);
   liveScores();
   render();
@@ -458,56 +779,51 @@ function ddGo() {
   cur.clueShown = true;
   showClue();
   M('mcat').textContent = CATS[cur.c].name + ' - Daily Double - ' + dollars(cur.val);
-  M('mstatus').textContent = S.names[cur.lock] + ' wagered ' + dollars(cur.val) + '. Pick 1-4.';
+  M('mstatus').textContent = S.names[cur.lock] + ' wagered ' + dollars(cur.val) + '. Only ' + S.names[cur.lock] + ' answers, with ' + keyList(cur.lock) + '.';
   render();
 }
 
 function showClue() {
-  M('mclue').textContent = CATS[cur.c].clues[cur.r][0];
+  const entry = S.deck[cur.k];
+  setDomain(entry.domain);
+  setClue(entry.q, entry.code);
   cur.clueShown = true;
-  renderOpts(choose);
-  if (!cur.dd) M('mstatus').textContent = 'Buzz in with A or L, then pick 1-4.';
-  setButtons(clueButtons());
+  renderOpts();
+  if (!cur.dd) {
+    M('mstatus').textContent = 'First key locks the answer. P1 uses 1 2 3 4. P2 uses 7 8 9 0.';
+  }
+  setButtons([closeSpec()]);
   showModal();
 }
 
-function buzz(i) {
-  if (!cur || cur.final || cur.dd || cur.done || cur.resolved) return;
-  if (cur.lock !== null || cur.out.includes(i)) return;
+function answer(player, idx) {
+  if (!cur || cur.final || cur.done || cur.resolved || !cur.clueShown) return;
+  if (!M('modal').classList.contains('show')) return;
   if (!M('mopts').children.length) return;
-  cur.lock = i;
-  beep(i ? 660 : 440, .3);
-  M('mstatus').textContent = S.names[i] + ', pick 1-4.';
-  setButtons(clueButtons());
-  render();
-}
-
-function choose(i) {
-  if (!cur || cur.final || cur.done || cur.resolved) return;
-  if (!M('mopts').children.length) return;
-  if (cur.eliminated.includes(i)) return;
-  if (cur.lock === null) {
-    M('mstatus').textContent = 'Buzz in first (A or L), then pick 1-4.';
+  if (idx < 0 || idx > 3) return;
+  if (allowedPlayers().indexOf(player) === -1) return;
+  if (cur.eliminated.indexOf(idx) !== -1) {
+    M('mstatus').textContent = 'That answer is already out. Pick another.';
     return;
   }
+  cur.lock = player;
   const d = currentDeck();
-  const player = cur.lock;
-  if (i === d.correct) {
+  if (idx === d.correct) {
     S.scores[player] += cur.val;
     cur.done = true;
     cur.resolved = true;
-    if (!S.used.includes(cur.k)) S.used.push(cur.k);
+    if (S.used.indexOf(cur.k) === -1) S.used.push(cur.k);
     save();
     beep(990, .25);
     paint();
-    M('mstatus').textContent = S.names[player] + ' is correct! +' + dollars(cur.val) + ' - ' + 'ABCD'[i] + '. ' + d.options[i];
-    setButtons([{ id: 'closeBtn', label: 'Close (Esc)', on: closeClue }]);
+    M('mstatus').textContent = d.domain + ' · ' + S.names[player] + ' is correct! +' + dollars(cur.val) + ' - ' + 'ABCD'[idx] + '. ' + d.options[idx];
+    setButtons([closeSpec()]);
     render();
     scheduleClose();
     return;
   }
   S.scores[player] -= cur.val;
-  cur.eliminated.push(i);
+  cur.eliminated.push(idx);
   cur.out.push(player);
   cur.lock = null;
   save();
@@ -516,16 +832,16 @@ function choose(i) {
   if (!canSteal) {
     cur.resolved = true;
     cur.done = true;
-    if (!S.used.includes(cur.k)) S.used.push(cur.k);
+    if (S.used.indexOf(cur.k) === -1) S.used.push(cur.k);
     save();
     paint();
-    M('mstatus').textContent = S.names[player] + ' is wrong. -' + dollars(cur.val) + '. Correct: ' + 'ABCD'[d.correct] + '. ' + d.options[d.correct];
-    setButtons([{ id: 'closeBtn', label: 'Close (Esc)', on: closeClue }]);
+    M('mstatus').textContent = d.domain + ' · ' + S.names[player] + ' is wrong. -' + dollars(cur.val) + '. Correct: ' + 'ABCD'[d.correct] + '. ' + d.options[d.correct];
+    setButtons([closeSpec()]);
   } else {
     paint();
     const other = 1 - player;
-    M('mstatus').textContent = S.names[player] + ' is wrong (-' + dollars(cur.val) + '). ' + S.names[other] + ' may buzz and pick from what is left.';
-    setButtons(clueButtons());
+    M('mstatus').textContent = S.names[player] + ' is wrong (-' + dollars(cur.val) + '). ' + S.names[other] + ' may steal with ' + keyList(other) + '.';
+    setButtons([closeSpec()]);
   }
   render();
 }
@@ -533,22 +849,26 @@ function choose(i) {
 function closeClue() {
   if (!cur) return;
   clearTimeout(closeTimer);
-  if (!cur.final && !S.used.includes(cur.k)) S.used.push(cur.k);
+  if (!cur.final && S.used.indexOf(cur.k) === -1) S.used.push(cur.k);
   save();
   cur = null;
+  setDomain('');
+  clearOpts();
   hideModal();
   render();
 }
 
 function finalJ() {
   if (cur) return;
-  cur = { k: 'final', final: true, phase: 'wager', picks: [null, null], w: [0, 0], eliminated: [], resolved: false, scored: false, lock: null };
-  M('mcat').textContent = 'FINAL JEOPARDY - ' + FINAL.cat;
-  M('mclue').textContent = 'Enter secret wagers. The clue comes next.';
-  M('mopts').textContent = '';
+  const d = S.deck.final;
+  cur = { k: 'final', final: true, phase: 'wager', picks: [null, null], w: [0, 0], eliminated: [], resolved: false, scored: false, lock: null, clueShown: false, done: false };
+  setDomain(d.domain);
+  M('mcat').textContent = 'FINAL JEOPARDY - ' + d.domain;
+  setClue('Enter secret wagers. The clue comes next.', '');
+  clearOpts();
   const status = M('mstatus');
   status.textContent = '';
-  [0, 1].forEach(i => {
+  [0, 1].forEach(function (i) {
     const max = Math.max(0, S.scores[i]);
     const row = document.createElement('div');
     row.className = 'wager-row';
@@ -566,7 +886,7 @@ function finalJ() {
   });
   setButtons([
     { id: 'showClue', label: 'Show clue', on: finalClue },
-    { id: 'closeBtn', label: 'Close (Esc)', on: closeClue }
+    closeSpec()
   ]);
   showModal();
   M('fw0').focus();
@@ -574,19 +894,29 @@ function finalJ() {
 
 function finalClue() {
   if (!cur || !cur.final || cur.phase !== 'wager') return;
-  cur.w = [0, 1].map(i => clampWager(M('fw' + i).value, Math.max(0, S.scores[i])));
+  cur.w = [0, 1].map(function (i) { return clampWager(M('fw' + i).value, Math.max(0, S.scores[i])); });
   showFinalPick(0);
 }
 
 function showFinalPick(player) {
+  const d = S.deck.final;
   cur.phase = player === 0 ? 'p1' : 'p2';
+  cur.clueShown = true;
   cur.resolved = false;
-  M('mcat').textContent = 'FINAL JEOPARDY - ' + FINAL.cat;
-  M('mclue').textContent = FINAL.clue;
-  renderOpts(secretPick);
-  M('mstatus').textContent = S.names[player] + ', pick in secret. Press 1-4 or click. ' + S.names[1 - player] + ', look away.';
-  setButtons([{ id: 'closeBtn', label: 'Close (Esc)', on: closeClue }]);
+  setDomain(d.domain);
+  M('mcat').textContent = 'FINAL JEOPARDY - ' + d.domain;
+  setClue(d.q, d.code);
+  renderOpts();
+  M('mstatus').textContent = S.names[player] + ', lock a secret pick with ' + keyList(player) + '. ' + S.names[1 - player] + ', look away.';
+  setButtons([closeSpec()]);
   liveScores();
+}
+
+function finalKey(player, idx) {
+  if (!cur || !cur.final || cur.resolved || cur.scored) return;
+  if (idx < 0 || idx > 3) return;
+  if (cur.phase === 'p1' && player === 0) secretPick(idx);
+  else if (cur.phase === 'p2' && player === 1) secretPick(idx);
 }
 
 function secretPick(i) {
@@ -603,12 +933,13 @@ function secretPick(i) {
 
 function showHandoff() {
   cur.phase = 'handoff';
-  M('mopts').textContent = '';
-  M('mclue').textContent = S.names[0] + ' is locked in.';
+  cur.clueShown = false;
+  clearOpts();
+  setClue(S.names[0] + ' is locked in.', '');
   M('mstatus').textContent = 'Hand the keyboard to ' + S.names[1] + '.';
   setButtons([
-    { id: 'p2go', label: S.names[1] + ', show the clue', on: () => showFinalPick(1) },
-    { id: 'closeBtn', label: 'Close (Esc)', on: closeClue }
+    { id: 'p2go', label: S.names[1] + ', show the clue', on: function () { showFinalPick(1); } },
+    closeSpec()
   ]);
 }
 
@@ -617,22 +948,24 @@ function revealFinal() {
   cur.scored = true;
   cur.phase = 'reveal';
   cur.resolved = true;
+  cur.clueShown = true;
   const d = S.deck.final;
+  setDomain(d.domain);
   cur.eliminated = [];
-  const lines = [0, 1].map(i => {
+  const lines = [0, 1].map(function (i) {
     const pick = cur.picks[i];
     const ok = pick === d.correct;
     S.scores[i] += ok ? cur.w[i] : -cur.w[i];
-    if (pick !== null && pick !== d.correct) cur.eliminated.push(pick);
+    if (pick !== null && pick !== d.correct && cur.eliminated.indexOf(pick) === -1) cur.eliminated.push(pick);
     const label = pick === null ? 'nothing' : ('ABCD'[pick] + '. ' + d.options[pick]);
     return S.names[i] + ' wagered ' + dollars(cur.w[i]) + ' and picked ' + label + ' - ' + (ok ? 'correct' : 'wrong') + ' - now ' + dollars(S.scores[i]);
   });
   save();
-  M('mclue').textContent = FINAL.clue;
-  renderOpts(() => {});
+  setClue(d.q, d.code);
+  renderOpts();
   paint();
-  M('mstatus').textContent = lines.join('\n');
-  setButtons([{ id: 'closeBtn', label: 'Done (Esc)', on: closeClue }]);
+  M('mstatus').textContent = d.domain + '\n' + lines.join('\n');
+  setButtons([closeSpec()]);
   if (cur.picks[0] === d.correct || cur.picks[1] === d.correct) beep(990, .25);
   else beep(150, .5);
   render();
@@ -646,23 +979,24 @@ function onKey(e) {
     return;
   }
   const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
-  if (k === 'a') { e.preventDefault(); buzz(0); }
-  else if (k === 'l') { e.preventDefault(); buzz(1); }
-  else if (k === '1' || k === '2' || k === '3' || k === '4') {
-    e.preventDefault();
-    const idx = k.charCodeAt(0) - 49;
-    if (cur && cur.final) secretPick(idx);
-    else choose(idx);
-  } else if (k === ' ') {
-    if (cur) e.preventDefault();
-  } else if (k === 'Escape') closeClue();
-  else if (k === 'f') fs();
-  else if (k === 'm') mute();
+  if (k === 'Escape' || e.key === 'Escape') { closeClue(); return; }
+  if (k === 'f') { fs(); return; }
+  if (k === 'm') { mute(); return; }
+  if (k === ' ') { if (cur) e.preventDefault(); return; }
+  let player = null;
+  let idx = null;
+  if (Object.prototype.hasOwnProperty.call(P1_CODE, e.code)) { player = 0; idx = P1_CODE[e.code]; }
+  else if (Object.prototype.hasOwnProperty.call(P2_CODE, e.code)) { player = 1; idx = P2_CODE[e.code]; }
+  else return;
+  e.preventDefault();
+  if (!cur) return;
+  if (cur.final) finalKey(player, idx);
+  else answer(player, idx);
 }
 
 function fs() {
   if (document.fullscreenElement) document.exitFullscreen();
-  else document.documentElement.requestFullscreen().catch(() => {});
+  else document.documentElement.requestFullscreen().catch(function () {});
 }
 
 function mute() {
@@ -673,25 +1007,46 @@ function mute() {
 M('fsBtn').onclick = fs;
 M('muteBtn').onclick = mute;
 M('finalBtn').onclick = finalJ;
-M('newBtn').onclick = () => {
-  if (!confirm('Start a new game? Every answer will be reshuffled.')) return;
+M('newBtn').onclick = function () {
+  if (!confirm('Start a new game? New clues will be dealt, skipping ones this browser has already seen.')) return;
   clearTimeout(closeTimer);
   S = fresh();
   save();
   cur = null;
+  setDomain('');
+  clearOpts();
   hideModal();
   render();
 };
 document.addEventListener('keydown', onKey);
 
 window.__PACK = {
-  names: CATS.map(cat => cat.name),
-  clues: CATS.map(cat => cat.clues.map(clue => ({
-    q: clue[0],
-    a: clue[1],
-    wrong: [clue[2], clue[3], clue[4]]
-  }))),
-  final: { cat: FINAL.cat, clue: FINAL.clue, a: FINAL.a, wrong: FINAL.wrong.slice() }
+  domains: DOMAINS.slice(),
+  names: CATS.map(function (cat) { return cat.name; }),
+  keys: { p1: P1_KEYS.slice(), p2: P2_KEYS.slice(), letters: ['A', 'B', 'C', 'D'] },
+  clues: CATS.map(function (cat) {
+    return cat.pools.map(function (pool) {
+      return pool.map(function (c) {
+        return { id: c.id, domain: c.domain, q: c.q, code: c.code, a: c.a, wrong: c.wrong.slice() };
+      });
+    });
+  }),
+  finals: FINALS.map(function (c) {
+    return { id: c.id, domain: c.domain, q: c.q, code: c.code, a: c.a, wrong: c.wrong.slice() };
+  })
+};
+
+window.__debug = {
+  setSeen: function (ids) {
+    S.seen = ids.slice();
+    save();
+  },
+  forceSlot: function (k, entry) {
+    S.deck[k] = entry;
+    S.used = S.used.filter(function (x) { return x !== k; });
+    save();
+    if (!cur) render();
+  }
 };
 
 load();
