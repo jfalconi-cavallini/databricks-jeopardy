@@ -37,15 +37,17 @@ header button{margin-left:.4vw}
 #mclue{font-family:Arial Black,Arial,sans-serif;font-size:3.15vh;margin:.7vh 0 1vh;line-height:1.18;max-width:94vw;width:min(94vw,1500px);text-transform:none}
 #mclue .qtext{text-transform:uppercase;text-shadow:2px 2px #000}
 #mclue .code{text-transform:none;font-family:ui-monospace,"Cascadia Code",Consolas,"Courier New",monospace;font-weight:650;font-size:2.05vh;text-align:left;background:#04105a;color:#fff;border:3px solid #ffcc00;border-radius:10px;padding:.8vh 1.1vw;margin:.8vh auto 0;white-space:pre;line-height:1.32;text-shadow:none;overflow:auto;max-width:100%}
-#mlegend{font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:2.15vh;color:#ffcc00;min-height:2.3vh;margin:0 0 .45vh;letter-spacing:.01em}
-#mopts{width:min(94vw,1500px);display:flex;flex-direction:column;gap:.7vh}
-.opt{font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:2.7vh;text-align:left;padding:.7vh 1vw;border-radius:12px;border:4px solid #fff;background:#0b1a5c;color:#fff;display:flex;align-items:center;gap:.7vw;line-height:1.2;width:100%}
-.opt .key{flex:0 0 auto;background:#ffcc00;color:#000;font-family:Arial Black,Arial,sans-serif;font-size:2.15vh;min-width:8.2vh;height:4.8vh;border:0;border-radius:8px;display:flex;align-items:center;justify-content:center;gap:.35vh;cursor:pointer;padding:0 .5vh}
-.opt .key small{font-size:1.35vh;letter-spacing:.04em}
+#mlegend{font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:2vh;color:#ffcc00;min-height:2.2vh;margin:0 0 .4vh;letter-spacing:.01em;max-width:96vw}
+#mopts{width:min(96vw,1600px);display:grid;grid-template-columns:1fr 1fr;gap:.7vh 1vw}
+.opt{font-family:Arial,Helvetica,sans-serif;font-weight:700;font-size:2.35vh;text-align:left;padding:.65vh .9vw .75vh;border-radius:12px;border:4px solid #fff;background:#0b1a5c;color:#fff;display:flex;flex-direction:column;align-items:stretch;gap:.35vh;line-height:1.2;min-width:0}
+.opt-head{display:flex;align-items:center;gap:.45vw;min-width:0}
+.opt .key{flex:0 0 auto;background:#ffcc00;color:#000;font-family:Arial Black,Arial,sans-serif;font-size:2vh;min-width:8vh;height:4.2vh;border:0;border-radius:8px;display:flex;align-items:center;justify-content:center;gap:.3vh;cursor:pointer;padding:0 .45vh}
+.opt .key small{font-size:1.3vh;letter-spacing:.04em}
 .opt .key:disabled{opacity:.35;cursor:default}
-.opt .ltr{flex:0 0 auto;color:#ffcc00;font-family:Arial Black,Arial,sans-serif;font-size:2.8vh;width:3.4vh;text-align:center}
+.opt .ltr{flex:0 0 auto;color:#ffcc00;font-family:Arial Black,Arial,sans-serif;font-size:3.1vh;width:1.3em;text-align:center}
+.opt .pos{flex:1;font-size:1.7vh;letter-spacing:.06em;text-transform:uppercase;color:#d5ddff;min-width:0}
 .opt .txt{flex:1}
-.opt .badge{flex:0 0 auto;font-family:Arial Black,Arial,sans-serif;font-size:2vh;letter-spacing:.06em}
+.opt .badge{flex:0 0 auto;font-family:Arial Black,Arial,sans-serif;font-size:1.9vh;letter-spacing:.06em;align-self:flex-end}
 .opt.right{background:#0c6e32;border-color:#d6ff4a;box-shadow:0 0 24px rgba(214,255,74,.45)}
 .opt.wrong{background:#7a1428;border-color:#ff8d8d}
 #mstatus{font-size:2.6vh;margin:1vh 0 .7vh;line-height:1.3;max-width:94vw;min-height:3.2vh;white-space:pre-line}
@@ -59,7 +61,7 @@ input.secret{-webkit-text-security:disc}
 <body>
 <header>
   <h1>DATABRICKS JEOPARDY!</h1>
-  <div id="help">P1: 1 2 3 4 = A B C D · P2: 7 8 9 0 = A B C D · Esc close · F fullscreen · M mute</div>
+  <div id="help">P1: Q W / A S · P2: I O / K L · 2×2 grid · Esc close · F fullscreen · M mute</div>
   <div>
     <button id="finalBtn" type="button">Final Jeopardy</button>
     <button id="muteBtn" type="button">Mute</button>
@@ -83,10 +85,16 @@ input.secret{-webkit-text-security:disc}
 const VALS = [200, 400, 600, 800, 1000];
 const KEY = 'dbjeopardy';
 const DOMAINS = ['Platform', 'Ingestion', 'Transformation', 'Lakeflow Jobs', 'CI/CD', 'Troubleshooting', 'Governance'];
-const P1_KEYS = ['1', '2', '3', '4'];
-const P2_KEYS = ['7', '8', '9', '0'];
-const P1_CODE = { Digit1: 0, Digit2: 1, Digit3: 2, Digit4: 3 };
-const P2_CODE = { Digit7: 0, Digit8: 1, Digit9: 2, Digit0: 3 };
+const P1_KEYS = ['Q', 'W', 'A', 'S'];
+const P2_KEYS = ['I', 'O', 'K', 'L'];
+const P1_MAP = { q: 0, w: 1, a: 2, s: 3 };
+const P2_MAP = { i: 0, o: 1, k: 2, l: 3 };
+const QUADS = [
+  { id: 'top-left', label: 'Top left' },
+  { id: 'top-right', label: 'Top right' },
+  { id: 'bottom-left', label: 'Bottom left' },
+  { id: 'bottom-right', label: 'Bottom right' }
+];
 
 function Q(id, domain, q, a, w1, w2, w3, code) {
   return { id: id, domain: domain, q: q, a: a, wrong: [w1, w2, w3], code: code || '' };
@@ -536,7 +544,7 @@ function render() {
     });
     const keys = document.createElement('span');
     keys.className = 'keys';
-    keys.textContent = i === 0 ? '1 2 3 4' : '7 8 9 0';
+    keys.textContent = i === 0 ? 'Q W / A S' : 'I O / K L';
     keys.setAttribute('aria-label', 'Player ' + (i + 1) + ' answer keys');
     const score = document.createElement('span');
     score.className = 'score' + (S.scores[i] < 0 ? ' neg' : '');
@@ -633,7 +641,7 @@ function allowedPlayers() {
 }
 
 function keyList(player) {
-  return player === 0 ? '1 2 3 4' : '7 8 9 0';
+  return player === 0 ? 'Q W / A S' : 'I O / K L';
 }
 
 function paint() {
@@ -667,11 +675,21 @@ function renderOpts() {
   const d = currentDeck();
   const box = M('mopts');
   box.textContent = '';
-  M('mlegend').textContent = 'P1: 1 2 3 4 = A B C D    ·    P2: 7 8 9 0 = A B C D';
+  M('mlegend').textContent = 'Keys sit like the grid. P1: Q W / A S. P2: I O / K L. P1 A is bottom-left (answer C), not answer A.';
   d.options.forEach(function (text, i) {
     const row = document.createElement('div');
     row.className = 'opt';
     row.dataset.i = String(i);
+    row.dataset.pos = QUADS[i].id;
+    const head = document.createElement('div');
+    head.className = 'opt-head';
+    const ltr = document.createElement('span');
+    ltr.className = 'ltr';
+    ltr.textContent = 'ABCD'[i];
+    const pos = document.createElement('span');
+    pos.className = 'pos';
+    pos.textContent = QUADS[i].label;
+    head.append(ltr, pos);
     [0, 1].forEach(function (player) {
       const key = document.createElement('button');
       key.type = 'button';
@@ -682,20 +700,17 @@ function renderOpts() {
       const face = document.createElement('span');
       face.textContent = (player ? P2_KEYS : P1_KEYS)[i];
       key.append(who, document.createTextNode(' '), face);
-      key.setAttribute('aria-label', 'Player ' + (player + 1) + ' answer ' + 'ABCD'[i] + ', key ' + face.textContent);
+      key.setAttribute('aria-label', 'Player ' + (player + 1) + ' ' + QUADS[i].label + ', answer ' + 'ABCD'[i] + ', key ' + face.textContent);
       key.addEventListener('click', function () {
         if (cur && cur.final) finalKey(player, i);
         else answer(player, i);
       });
-      row.appendChild(key);
+      head.appendChild(key);
     });
-    const ltr = document.createElement('span');
-    ltr.className = 'ltr';
-    ltr.textContent = 'ABCD'[i];
     const txt = document.createElement('span');
     txt.className = 'txt';
     txt.textContent = text;
-    row.append(ltr, txt);
+    row.append(head, txt);
     box.appendChild(row);
   });
   paint();
@@ -790,7 +805,7 @@ function showClue() {
   cur.clueShown = true;
   renderOpts();
   if (!cur.dd) {
-    M('mstatus').textContent = 'First key locks the answer. P1 uses 1 2 3 4. P2 uses 7 8 9 0.';
+    M('mstatus').textContent = 'First key locks the answer. P1: Q W / A S. P2: I O / K L.';
   }
   setButtons([closeSpec()]);
   showModal();
@@ -983,10 +998,11 @@ function onKey(e) {
   if (k === 'f') { fs(); return; }
   if (k === 'm') { mute(); return; }
   if (k === ' ') { if (cur) e.preventDefault(); return; }
+  if (e.ctrlKey || e.metaKey || e.altKey) return;
   let player = null;
   let idx = null;
-  if (Object.prototype.hasOwnProperty.call(P1_CODE, e.code)) { player = 0; idx = P1_CODE[e.code]; }
-  else if (Object.prototype.hasOwnProperty.call(P2_CODE, e.code)) { player = 1; idx = P2_CODE[e.code]; }
+  if (Object.prototype.hasOwnProperty.call(P1_MAP, k)) { player = 0; idx = P1_MAP[k]; }
+  else if (Object.prototype.hasOwnProperty.call(P2_MAP, k)) { player = 1; idx = P2_MAP[k]; }
   else return;
   e.preventDefault();
   if (!cur) return;
@@ -1023,7 +1039,7 @@ document.addEventListener('keydown', onKey);
 window.__PACK = {
   domains: DOMAINS.slice(),
   names: CATS.map(function (cat) { return cat.name; }),
-  keys: { p1: P1_KEYS.slice(), p2: P2_KEYS.slice(), letters: ['A', 'B', 'C', 'D'] },
+  keys: { p1: P1_KEYS.slice(), p2: P2_KEYS.slice(), letters: ['A', 'B', 'C', 'D'], positions: QUADS.map(function (q) { return q.id; }) },
   clues: CATS.map(function (cat) {
     return cat.pools.map(function (pool) {
       return pool.map(function (c) {
