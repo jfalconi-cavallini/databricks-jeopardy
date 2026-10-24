@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Databricks Jeopardy</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#000;color:#fff;font-family:Arial Black,Arial,sans-serif;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+header{display:flex;justify-content:space-between;align-items:center;padding:.5vh 1vw;background:#0b1a5c}
+h1{margin:0;font-size:3.2vh;color:#ffcc00;letter-spacing:.1em}
+header button,.btn{font:inherit;font-size:2vh;padding:.6vh 1vw;margin-left:.5vw;background:#ff3621;color:#fff;border:0;border-radius:6px;cursor:pointer}
+#board{flex:1;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:auto repeat(5,1fr);gap:.5vh;padding:.5vh;background:#000}
+.cat{background:#060ce9;display:flex;align-items:center;justify-content:center;text-align:center;font-size:2.6vh;padding:1vh;min-height:9vh;text-transform:uppercase}
+.tile{background:#060ce9;color:#ffcc00;font-size:6vh;display:flex;align-items:center;justify-content:center;cursor:pointer;text-shadow:3px 3px #000}
+.tile.used{background:#02064a;color:transparent;cursor:default}
+#scores{display:flex;gap:1vw;padding:.5vh 1vw;background:#0b1a5c}
+.player{flex:1;display:flex;align-items:center;justify-content:space-between;background:#060ce9;padding:1vh 1vw;border-radius:8px;border:4px solid transparent}
+.player.lock{border-color:#ffcc00;box-shadow:0 0 20px #ffcc00}
+.player input{font:inherit;font-size:3.5vh;background:transparent;color:#fff;border:0;width:40%}
+.score{font-size:6vh;color:#fff}.score.neg{color:#ff6b6b}
+.adj button{font:inherit;font-size:2.5vh;width:5vh;margin:0 .2vw;cursor:pointer}
+#modal{position:fixed;inset:0;background:#060ce9;display:none;flex-direction:column;align-items:center;justify-content:center;padding:4vh 6vw;text-align:center}
+#modal.show{display:flex}#mcat{font-size:3.5vh;color:#ffcc00}#mclue{font-size:6.5vh;margin:4vh 0;text-transform:uppercase;line-height:1.25;text-shadow:3px 3px #000}
+#mans{font-size:5.5vh;color:#ffcc00;min-height:7vh}#mstatus{font-size:4vh;margin:2vh}#mbtns .btn{font-size:3vh;padding:1.2vh 2vw;margin:.5vw}
+#help{font-size:1.7vh;color:#ccd}input.w{font-size:4vh;width:20vw;text-align:center}
+</style></head><body>
+<header><h1>DATABRICKS JEOPARDY!</h1><div id="help">A / L buzz · Space reveal · C correct · W wrong · Esc close · F fullscreen · M mute</div>
+<div><button id="finalBtn">Final Jeopardy</button><button id="muteBtn">Mute</button><button id="fsBtn">Fullscreen</button><button id="newBtn">New Game</button></div></header>
+<div id="board"></div>
+<div id="scores"></div>
+<div id="modal"><div id="mcat"></div><div id="mclue"></div><div id="mans"></div><div id="mstatus"></div><div id="mbtns"></div></div>
+<script>
+const CATS=[
+["Spark",[
+["This Spark abstraction is a distributed collection of data organized into named columns, like a table","What is a DataFrame?"],
+["Transformations are lazy; these operations, such as count() or collect(), trigger actual execution","What are actions?"],
+["Operations like groupBy or join that require a shuffle of data across partitions are this type of transformation","What is a wide transformation?"],
+["This DataFrame method reduces the number of partitions while avoiding a full shuffle","What is coalesce()?"],
+["This Spark SQL optimizer turns DataFrame and SQL queries into optimized execution plans","What is Catalyst?"]]],
+["Delta Lake",[
+["Delta Lake stores table data files in this open-source columnar format","What is Parquet?"],
+["The Delta transaction log lives in this subdirectory of the table's location","What is _delta_log?"],
+["Using VERSION AS OF or TIMESTAMP AS OF to query an older table snapshot is called this","What is time travel?"],
+["This command deletes data files no longer referenced by the table, with a default retention threshold of 7 days","What is VACUUM?"],
+["This command compacts small files into larger ones; on tables without liquid clustering it can add ZORDER BY","What is OPTIMIZE?"]]],
+["Unity Catalog",[
+["In Unity Catalog's three-level namespace, this level comes first, before schema and table","What is a catalog?"],
+["This SQL command gives a privilege such as SELECT on a table to a user or group","What is GRANT?"],
+["This top-level Unity Catalog container stores metadata and is attached to workspaces in a region","What is a metastore?"],
+["Unity Catalog automatically captures this, showing how data flows between tables and columns","What is data lineage?"],
+["This Unity Catalog object combines a storage credential with a cloud storage path","What is an external location?"]]],
+["Databricks SQL",[
+["This compute resource runs SQL queries in Databricks SQL, available in serverless, pro and classic types","What is a SQL warehouse?"],
+["This SQL statement upserts rows from a source into a Delta table using WHEN MATCHED / WHEN NOT MATCHED","What is MERGE INTO?"],
+["This command shows a Delta table's version history, including operations and timestamps","What is DESCRIBE HISTORY?"],
+["Known by its 4-letter acronym, this statement creates a table and fills it from a query in one step","What is CTAS (CREATE TABLE AS SELECT)?"],
+["This SQL command loads files into a Delta table idempotently, skipping files it has already loaded","What is COPY INTO?"]]],
+["Data Engineering / ETL",[
+["In the medallion architecture, raw ingested data lands in this layer","What is bronze?"],
+["Auto Loader is invoked with this value passed to spark.readStream.format()","What is cloudFiles?"],
+["This medallion layer holds business-level aggregates ready for reporting","What is gold?"],
+["In Lakeflow pipelines (formerly Delta Live Tables), these SQL boolean checks on each record can warn, drop the row, or fail the update","What are expectations?"],
+["This Structured Streaming option sets where progress info is stored so a query can recover after failure","What is checkpointLocation?"]]],
+["Lakehouse & Workflows",[
+["Databricks' term for an architecture combining the best of data lakes and data warehouses","What is the lakehouse?"],
+["A Databricks job is made up of one or more of these units of work, which can depend on each other","What are tasks?"],
+["Formerly called Repos, this feature syncs workspace code with a Git provider","What are Git folders?"],
+["Unlike all-purpose compute, this classic compute type starts for a job run and terminates automatically when the run completes","What is jobs compute (a job cluster)?"],
+["Developed by Databricks, this open protocol shares live Delta Lake and Parquet data across platforms without copying it","What is Delta Sharing (now evolving into OpenSharing)?"]]]];
+const FINAL={cat:"Delta Lake",clue:"This Delta Lake feature rejects writes whose columns or data types don't match the table's schema",ans:"What is schema enforcement?"};
+const VALS=[200,400,600,800,1000];const KEY='dbjeopardy';
+let S,cur=null,muted=false,actx;
+function fresh(){let all=[];for(let c=0;c<6;c++)for(let r=0;r<5;r++)all.push(c+'-'+r);let dd=[];while(dd.length<2){let k=all[Math.floor(Math.random()*30)];if(!dd.includes(k)&&!k.endsWith('-0'))dd.push(k)}
+return{names:S?S.names:['Player 1','Player 2'],scores:[0,0],used:[],dd}}
+function save(){localStorage.setItem(KEY,JSON.stringify(S))}
+function load(){try{S=JSON.parse(localStorage.getItem(KEY))}catch(e){}if(!S||!S.dd)S=fresh()}
+function beep(f,d){if(muted)return;try{actx=actx||new AudioContext();let o=actx.createOscillator(),g=actx.createGain();o.frequency.value=f;o.connect(g);g.connect(actx.destination);g.gain.value=.2;o.start();o.stop(actx.currentTime+(d||.2))}catch(e){}}
+function render(){const b=document.getElementById('board');b.innerHTML='';CATS.forEach(c=>{b.insertAdjacentHTML('beforeend',`<div class="cat">${c[0].replace('&','&amp;')}</div>`)});
+for(let r=0;r<5;r++)for(let c=0;c<6;c++){let k=c+'-'+r,d=document.createElement('div');d.className='tile'+(S.used.includes(k)?' used':'');d.textContent='$'+VALS[r];d.dataset.k=k;d.onclick=()=>openClue(c,r);b.appendChild(d)}
+const s=document.getElementById('scores');s.innerHTML='';[0,1].forEach(i=>{s.insertAdjacentHTML('beforeend',`<div class="player ${cur&&cur.lock===i?'lock':''}" id="p${i}"><input value="${S.names[i]}" data-i="${i}"><span class="adj"><button data-i="${i}" data-d="-200">−</button><button data-i="${i}" data-d="200">+</button></span><button class="btn buzz" data-i="${i}">Buzz (${i?'L':'A'})</button><span class="score ${S.scores[i]<0?'neg':''}" id="s${i}">$${S.scores[i]}</span></div>`)});
+s.querySelectorAll('input').forEach(e=>e.onchange=()=>{S.names[e.dataset.i]=e.value;save()});
+s.querySelectorAll('.adj button').forEach(e=>e.onclick=()=>{S.scores[e.dataset.i]+=+e.dataset.d;save();render()});
+s.querySelectorAll('.buzz').forEach(e=>e.onclick=()=>buzz(+e.dataset.i))}
+const M=id=>document.getElementById(id);
+function openClue(c,r){let k=c+'-'+r;if(S.used.includes(k)||cur)return;cur={k,c,r,val:VALS[r],lock:null,out:[],revealed:false,dd:S.dd.includes(k)};
+M('mcat').textContent=CATS[c][0]+' — $'+VALS[r];M('mans').textContent='';M('modal').classList.add('show');
+if(cur.dd){beep(880,.6);M('mclue').textContent='DAILY DOUBLE!';M('mstatus').innerHTML='Who picked it? Max wager shown after choosing.';
+M('mbtns').innerHTML=[0,1].map(i=>`<button class="btn" onclick="ddPick(${i})">${S.names[i]}</button>`).join('')}else showClue()}
+function ddPick(i){let max=Math.max(S.scores[i],1000);cur.lock=i;M('mstatus').innerHTML=`${S.names[i]}, wager (max $${max}): <input class="w" id="wager" type="number" min="0" max="${max}" value="${Math.min(1000,max)}">`;
+M('mbtns').innerHTML='<button class="btn" onclick="ddGo()">Show clue</button>';M('wager').focus()}
+function ddGo(){let i=cur.lock,max=Math.max(S.scores[i],1000);cur.val=Math.max(0,Math.min(max,+M('wager').value||0));showClue();M('mstatus').textContent=`${S.names[i]} wagered $${cur.val}`;render()}
+function showClue(){M('mclue').textContent=CATS[cur.c][1][cur.r][0];if(!cur.dd)M('mstatus').textContent='Buzz in! (A or L)';
+M('mbtns').innerHTML='<button class="btn" onclick="reveal()">Reveal (Space)</button><button class="btn" onclick="mark(true)">Correct (C)</button><button class="btn" onclick="mark(false)">Wrong (W)</button><button class="btn" onclick="closeClue()">Close (Esc)</button>'}
+function buzz(i){if(!cur||cur.dd||cur.lock!==null||cur.out.includes(i)||M('mclue').textContent==='DAILY DOUBLE!')return;cur.lock=i;beep(i?660:440,.3);M('mstatus').textContent=S.names[i]+' buzzed in!';render()}
+function reveal(){if(!cur)return;M('mans').textContent=CATS[cur.c][1][cur.r][1];cur.revealed=true}
+function mark(ok){if(!cur||cur.lock===null)return;let i=cur.lock;S.scores[i]+=ok?cur.val:-cur.val;save();
+if(ok){beep(990,.25);reveal();M('mstatus').textContent=S.names[i]+' is correct! +$'+cur.val;cur.done=true;S.used.push(cur.k);save();render();setTimeout(()=>cur&&cur.done&&closeClue(),1500);return}
+beep(150,.5);cur.out.push(i);cur.lock=null;if(cur.dd||cur.out.length>1){reveal();M('mstatus').textContent=S.names[i]+' is wrong. −$'+cur.val}else M('mstatus').textContent=S.names[i]+' is wrong (−$'+cur.val+'). '+S.names[1-i]+' may buzz!';render()}
+function closeClue(){if(!cur)return;if(!S.used.includes(cur.k))S.used.push(cur.k);save();cur=null;M('modal').classList.remove('show');render()}
+function finalJ(){if(cur)return;cur={k:'final',final:true,lock:null};M('mcat').textContent='FINAL JEOPARDY — '+FINAL.cat;M('mclue').textContent='Enter secret wagers';M('mans').textContent='';
+M('mstatus').innerHTML=[0,1].map(i=>`${S.names[i]} (max $${Math.max(0,S.scores[i])}): <input class="w" type="password" id="fw${i}">`).join('<br>');
+M('mbtns').innerHTML='<button class="btn" onclick="finalClue()">Show clue</button><button class="btn" onclick="closeClue()">Close</button>';M('modal').classList.add('show')}
+function finalClue(){cur.w=[0,1].map(i=>Math.max(0,Math.min(Math.max(0,S.scores[i]),+M('fw'+i).value||0)));M('mclue').textContent=FINAL.clue;M('mstatus').textContent='Write your answers!';
+M('mbtns').innerHTML='<button class="btn" onclick="M(\'mans\').textContent=FINAL.ans">Reveal</button>'+[0,1].map(i=>`<button class="btn" onclick="fj(${i},1,this)">${S.names[i]} ✓</button><button class="btn" onclick="fj(${i},0,this)">${S.names[i]} ✗</button>`).join('')+'<button class="btn" onclick="closeClue()">Done</button>'}
+function fj(i,ok,el){if(cur['f'+i])return;cur['f'+i]=1;S.scores[i]+=ok?cur.w[i]:-cur.w[i];save();render();M('mstatus').textContent=`${S.names[i]} wagered $${cur.w[i]} → $${S.scores[i]}`}
+document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT'&&e.key!=='Enter'&&e.key!=='Escape')return;let k=e.key.toLowerCase();
+if(k==='a')buzz(0);else if(k==='l')buzz(1);else if(k===' '||k==='enter'){if(cur&&!cur.final&&M('mclue').textContent!=='DAILY DOUBLE!'){e.preventDefault();reveal()}}
+else if(k==='c')mark(true);else if(k==='w')mark(false);else if(k==='escape')closeClue();else if(k==='f')fs();else if(k==='m')mute()});
+function fs(){document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen().catch(()=>{})}
+function mute(){muted=!muted;M('muteBtn').textContent=muted?'Unmute':'Mute'}
+M('fsBtn').onclick=fs;M('muteBtn').onclick=mute;M('finalBtn').onclick=finalJ;M('newBtn').onclick=()=>{if(confirm('Start a new game?')){S=fresh();save();cur=null;M('modal').classList.remove('show');render()}};
+load();render();
+</script></body></html>
